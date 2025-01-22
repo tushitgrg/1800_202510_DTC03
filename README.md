@@ -59,7 +59,7 @@ project-name/
 
 ## Contributors
 - **Ruthanna** - BCIT CST Student who loves dogs.
-- **Teammate Name** - BCIT CST Student, Frontend enthusiast with a knack for creative design. Fun fact: Has a collection of over 50 houseplants.
+- **Tushit Garg** - BCIT CST Student who loves anime
 
 ---
 
