@@ -59,8 +59,13 @@ project-name/
 
 ## Contributors
 - **Ruthanna** - BCIT CST Student who loves dogs.
+
 - **My name is Stanislav and Ruthanna erased my message :sadface:** 
----
+
+- **Tushit Garg** - BCIT CST Student who loves anime
+
+
+
 
 ## Acknowledgments
 
