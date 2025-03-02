@@ -33,7 +33,7 @@
   <!-- Header For Mobile  -->
 
 
- a
+ 
 
   <!-- Footer -->
  
@@ -42,6 +42,15 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
+<script>
+    firebase.auth().signOut().then(() => {
+    // Sign-out successful.
+    console.log("logging out user");
+    window.location = '/'
+  }).catch((error) => {
+    // An error happened.
+  });
+</script>
 <script src="/scripts/renderer.js"></script>
 </body>
 
