@@ -1,40 +1,38 @@
-let currentPage = 1; // this will help us keep track of the current page of data
-let loading = false; // this will prevent multiple fetches of data at the same time
-const contentDiv = document.getElementById('content'); // our post will be dynamically loaded here
-const loadingDiv = document.getElementById('loading'); // this will be our target element
+let currentPage = 1; // Tracks the current page of data
+let loading = false; // Prevents multiple fetches at the same time
+const contentDiv = document.getElementById('content'); // Posts will be dynamically loaded here
+const loadingDiv = document.getElementById('loading'); // Target element for infinite scrolling
 
-const defaultPosts = new Array(100).fill({ title: "Post title", body: "Post body" })
+const defaultPosts = new Array(10).fill({
+    username: "User123",
+    title: "Post title",
+    content: "Post body"
+});
 
-const delay = (time) => new Promise((resolve, reject) => setTimeout(resolve, time))
+const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 const getPosts = async (page) => {
-    // try {
-    //     let response = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${page}`);
-    //     if (!response.ok) {
-    //         throw new Error("HTTP error! Status: " + response.status);
-    //     }
-    //     return await response.json();
-    // } catch (e) {
-    //     throw new Error("Failed to fetch services: " + e.message);
-    // }
-    await delay(1000)
-    return defaultPosts
-}
+    await delay(1000); // Simulated delay for loading effect
+    return defaultPosts;
+};
 
 const appendData = (data) => {
     data.forEach(item => {
         const div = document.createElement('div');
-        div.className = 'item bg-yellow-500';
-        div.innerHTML = `<p>${item.username}</p><h3>${item.title}</h3><p>${item.content}</p>`;
+        div.className = 'bg-white shadow-md rounded-lg p-4 border border-gray-300 hover:shadow-lg transition-all duration-200';
+
+        div.innerHTML = `
+            <p class="text-sm text-gray-500">Posted by u/${item.username}</p>
+            <h3 class="text-lg font-bold text-gray-900 mt-1">${item.title}</h3>
+            <p class="text-gray-700 mt-2">${item.content}</p>
+        `;
+
         contentDiv.appendChild(div);
-    })
-}
+    });
+};
 
 const observer = new IntersectionObserver(async (entries) => {
     if (entries[0].isIntersecting && !loading) {
-
-        console.log(entries)
-
         loading = true;
         currentPage++;
         try {
@@ -55,10 +53,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (posts) {
             appendData(posts);
         } else {
-            console.log('posts not found or undefined');
+            console.log('Posts not found or undefined');
         }
     } catch (e) {
         console.log(e.message);
     }
 });
-
