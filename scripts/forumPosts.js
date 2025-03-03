@@ -3,7 +3,7 @@ let loading = false; // this will prevent multiple fetches of data at the same t
 const contentDiv = document.getElementById('content'); // our post will be dynamically loaded here
 const loadingDiv = document.getElementById('loading'); // this will be our target element
 
-const defaultPosts = [{username: "username", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}, {username: "Deniz", title: "Default title", content: "Some content"}]
+const defaultPosts = new Array(100).fill({ title: "Post title", body: "Post body" })
 
 const delay = (time) => new Promise((resolve, reject) => setTimeout(resolve, time))
 
