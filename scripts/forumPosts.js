@@ -20,16 +20,22 @@ const appendData = (data) => {
     data.forEach(item => {
         const div = document.createElement('div');
         div.className = 'bg-white shadow-md rounded-lg p-4 border border-gray-300 hover:shadow-lg transition-all duration-200';
-
+        
+        // Encode parameters to ensure special characters don't break the URL
+        const postUrl = `post.html?username=${encodeURIComponent(item.username)}&title=${encodeURIComponent(item.title)}&content=${encodeURIComponent(item.content)}`;
+        
         div.innerHTML = `
-            <p class="text-sm text-gray-500">Posted by u/${item.username}</p>
-            <h3 class="text-lg font-bold text-gray-900 mt-1">${item.title}</h3>
-            <p class="text-gray-700 mt-2">${item.content}</p>
+            <a href="${postUrl}" class="block">
+                <p class="text-sm text-gray-500">Posted by u/${item.username}</p>
+                <h3 class="text-lg font-bold text-gray-900 mt-1">${item.title}</h3>
+                <p class="text-gray-700 mt-2">${item.content}</p>
+            </a>
         `;
 
         contentDiv.appendChild(div);
     });
 };
+
 
 const observer = new IntersectionObserver(async (entries) => {
     if (entries[0].isIntersecting && !loading) {
