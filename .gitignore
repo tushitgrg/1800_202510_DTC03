@@ -3,3 +3,4 @@
 node_modules/
 .vscode/
 scripts/firebaseAPI_TEAMDTC03.js
+api/.env
