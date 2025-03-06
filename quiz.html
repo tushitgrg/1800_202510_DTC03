@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Well Circle - Mental Health Community</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,8 +27,8 @@
 </head>
 
 <body class="bg-gray-50">
-    <div id="header">
- </div>
+  <div id="header">
+  </div>
 
   <!-- Header For Mobile  -->
 
@@ -48,172 +48,172 @@
   <script>
     // Questions stored as an array of objects
     const questions = [
-  {
-    id: 1,
-    text: "On a scale of 1 to 10, how would you rate your current mood?",
-    type: "number",
-    placeholder: "Enter a number between 1 and 10"
-  },
-  {
-    id: 2,
-    text: "Which of these feelings have you experienced frequently this week? (Select all that apply)",
-    type: "checkbox",
-    options: [
-      { label: "Anxious", value: "anxious" },
-      { label: "Sad", value: "sad" },
-      { label: "Happy", value: "happy" },
-      { label: "Stressed", value: "stressed" }
-    ]
-  },
-  {
-    id: 3,
-    text: "How often have you been feeling overwhelmed?",
-    type: "radio",
-    options: [
-      { label: "Never", value: "never" },
-      { label: "Rarely", value: "rarely" },
-      { label: "Sometimes", value: "sometimes" },
-      { label: "Often", value: "often" }
-    ]
-  },
-  {
-    id: 4,
-    text: "Please describe how you have been feeling in your own words:",
-    type: "textarea",
-    placeholder: "Your response"
-  },
-  {
-    id: 5,
-    text: "How many hours of sleep did you get last night?",
-    type: "number",
-    placeholder: "Enter number of hours"
-  },
-  {
-    id: 6,
-    text: "Have you experienced any changes in your appetite recently?",
-    type: "radio",
-    options: [
-      { label: "No change", value: "no_change" },
-      { label: "Increased", value: "increased" },
-      { label: "Decreased", value: "decreased" }
-    ]
-  },
-  {
-    id: 7,
-    text: "Do you feel that you have enough social support?",
-    type: "radio",
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "Somewhat", value: "somewhat" },
-      { label: "No", value: "no" }
-    ]
-  },
-  {
-    id: 8,
-    text: "How often do you engage in activities that you enjoy?",
-    type: "radio",
-    options: [
-      { label: "Daily", value: "daily" },
-      { label: "Several times a week", value: "several_times" },
-      { label: "Once a week", value: "once_week" },
-      { label: "Rarely", value: "rarely" }
-    ]
-  },
-  {
-    id: 9,
-    text: "How frequently do you exercise or engage in physical activity?",
-    type: "radio",
-    options: [
-      { label: "Daily", value: "daily" },
-      { label: "Several times a week", value: "several_times" },
-      { label: "Once a week", value: "once_week" },
-      { label: "Rarely", value: "rarely" },
-      { label: "Never", value: "never" }
-    ]
-  },
-  {
-    id: 10,
-    text: "Have you noticed any changes in your concentration or decision-making abilities?",
-    type: "radio",
-    options: [
-      { label: "No change", value: "no_change" },
-      { label: "Somewhat slower", value: "somewhat_slower" },
-      { label: "Significantly slower", value: "significantly_slower" },
-      { label: "Improved", value: "improved" }
-    ]
-  },
-  {
-    id: 11,
-    text: "Do you feel safe in your daily environment?",
-    type: "radio",
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "Sometimes", value: "sometimes" },
-      { label: "No", value: "no" }
-    ]
-  },
-  {
-    id: 12,
-    text: "How would you describe your current stress level?",
-    type: "radio",
-    options: [
-      { label: "Low", value: "low" },
-      { label: "Moderate", value: "moderate" },
-      { label: "High", value: "high" },
-      { label: "Very high", value: "very_high" }
-    ]
-  },
-  {
-    id: 13,
-    text: "In the past month, how often have you felt hopeless?",
-    type: "radio",
-    options: [
-      { label: "Never", value: "never" },
-      { label: "Rarely", value: "rarely" },
-      { label: "Sometimes", value: "sometimes" },
-      { label: "Often", value: "often" },
-      { label: "Always", value: "always" }
-    ]
-  },
-  {
-    id: 14,
-    text: "Do you have any past or current mental health diagnoses? (Select all that apply)",
-    type: "checkbox",
-    options: [
-      { label: "Depression", value: "depression" },
-      { label: "Anxiety", value: "anxiety" },
-      { label: "Bipolar Disorder", value: "bipolar" },
-      { label: "PTSD", value: "ptsd" },
-      { label: "Other", value: "other" }
-    ]
-  },
-  {
-    id: 15,
-    text: "What are some coping strategies you use when you're feeling stressed?",
-    type: "textarea",
-    placeholder: "Describe your coping strategies"
-  }
-];
+      {
+        id: 1,
+        text: "On a scale of 1 to 10, how would you rate your current mood?",
+        type: "number",
+        placeholder: "Enter a number between 1 and 10"
+      },
+      {
+        id: 2,
+        text: "Which of these feelings have you experienced frequently this week? (Select all that apply)",
+        type: "checkbox",
+        options: [
+          { label: "Anxious", value: "anxious" },
+          { label: "Sad", value: "sad" },
+          { label: "Happy", value: "happy" },
+          { label: "Stressed", value: "stressed" }
+        ]
+      },
+      {
+        id: 3,
+        text: "How often have you been feeling overwhelmed?",
+        type: "radio",
+        options: [
+          { label: "Never", value: "never" },
+          { label: "Rarely", value: "rarely" },
+          { label: "Sometimes", value: "sometimes" },
+          { label: "Often", value: "often" }
+        ]
+      },
+      {
+        id: 4,
+        text: "Please describe how you have been feeling in your own words:",
+        type: "textarea",
+        placeholder: "Your response"
+      },
+      {
+        id: 5,
+        text: "How many hours of sleep did you get last night?",
+        type: "number",
+        placeholder: "Enter number of hours"
+      },
+      {
+        id: 6,
+        text: "Have you experienced any changes in your appetite recently?",
+        type: "radio",
+        options: [
+          { label: "No change", value: "no_change" },
+          { label: "Increased", value: "increased" },
+          { label: "Decreased", value: "decreased" }
+        ]
+      },
+      {
+        id: 7,
+        text: "Do you feel that you have enough social support?",
+        type: "radio",
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "Somewhat", value: "somewhat" },
+          { label: "No", value: "no" }
+        ]
+      },
+      {
+        id: 8,
+        text: "How often do you engage in activities that you enjoy?",
+        type: "radio",
+        options: [
+          { label: "Daily", value: "daily" },
+          { label: "Several times a week", value: "several_times" },
+          { label: "Once a week", value: "once_week" },
+          { label: "Rarely", value: "rarely" }
+        ]
+      },
+      {
+        id: 9,
+        text: "How frequently do you exercise or engage in physical activity?",
+        type: "radio",
+        options: [
+          { label: "Daily", value: "daily" },
+          { label: "Several times a week", value: "several_times" },
+          { label: "Once a week", value: "once_week" },
+          { label: "Rarely", value: "rarely" },
+          { label: "Never", value: "never" }
+        ]
+      },
+      {
+        id: 10,
+        text: "Have you noticed any changes in your concentration or decision-making abilities?",
+        type: "radio",
+        options: [
+          { label: "No change", value: "no_change" },
+          { label: "Somewhat slower", value: "somewhat_slower" },
+          { label: "Significantly slower", value: "significantly_slower" },
+          { label: "Improved", value: "improved" }
+        ]
+      },
+      {
+        id: 11,
+        text: "Do you feel safe in your daily environment?",
+        type: "radio",
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "Sometimes", value: "sometimes" },
+          { label: "No", value: "no" }
+        ]
+      },
+      {
+        id: 12,
+        text: "How would you describe your current stress level?",
+        type: "radio",
+        options: [
+          { label: "Low", value: "low" },
+          { label: "Moderate", value: "moderate" },
+          { label: "High", value: "high" },
+          { label: "Very high", value: "very_high" }
+        ]
+      },
+      {
+        id: 13,
+        text: "In the past month, how often have you felt hopeless?",
+        type: "radio",
+        options: [
+          { label: "Never", value: "never" },
+          { label: "Rarely", value: "rarely" },
+          { label: "Sometimes", value: "sometimes" },
+          { label: "Often", value: "often" },
+          { label: "Always", value: "always" }
+        ]
+      },
+      {
+        id: 14,
+        text: "Do you have any past or current mental health diagnoses? (Select all that apply)",
+        type: "checkbox",
+        options: [
+          { label: "Depression", value: "depression" },
+          { label: "Anxiety", value: "anxiety" },
+          { label: "Bipolar Disorder", value: "bipolar" },
+          { label: "PTSD", value: "ptsd" },
+          { label: "Other", value: "other" }
+        ]
+      },
+      {
+        id: 15,
+        text: "What are some coping strategies you use when you're feeling stressed?",
+        type: "textarea",
+        placeholder: "Describe your coping strategies"
+      }
+    ];
 
     let currentQuestionIndex = 0;
     const answers = {};
 
- 
+
     function renderQuestion() {
       const question = questions[currentQuestionIndex];
       let html = '';
-      
-    
-      html += `<p class="text-sm text-gray-500 mb-2">Question ${currentQuestionIndex + 1} of ${questions.length}</p>`;
-      
-      html += `<p class="text-xl mb-4">${question.text}</p>`;
-      
 
-      if(question.type === 'number') {
+
+      html += `<p class="text-sm text-gray-500 mb-2">Question ${currentQuestionIndex + 1} of ${questions.length}</p>`;
+
+      html += `<p class="text-xl mb-4">${question.text}</p>`;
+
+
+      if (question.type === 'number') {
         html += `<input type="number" placeholder="${question.placeholder}" class="border border-gray-300 rounded p-2 w-full" />`;
-      } else if(question.type === 'textarea') {
+      } else if (question.type === 'textarea') {
         html += `<textarea placeholder="${question.placeholder}" class="border border-gray-300 rounded p-2 w-full" rows="4"></textarea>`;
-      } else if(question.type === 'checkbox') {
+      } else if (question.type === 'checkbox') {
         question.options.forEach(option => {
           html += `
             <div class="mb-2">
@@ -222,7 +222,7 @@
             </div>
           `;
         });
-      } else if(question.type === 'radio') {
+      } else if (question.type === 'radio') {
         question.options.forEach(option => {
           html += `
             <div class="mb-2">
@@ -232,35 +232,35 @@
           `;
         });
       }
-      
+
       $('#quiz-container').html(html);
-      
-   
-      if(currentQuestionIndex === 0) {
+
+
+      if (currentQuestionIndex === 0) {
         $('#back-btn').hide();
       } else {
         $('#back-btn').show();
       }
-      
 
-      if(currentQuestionIndex === questions.length - 1) {
+
+      if (currentQuestionIndex === questions.length - 1) {
         $('#next-btn').text("Submit");
       } else {
         $('#next-btn').text("Next");
       }
-      
-    
+
+
       const savedAnswer = answers[question.id];
-      if(savedAnswer !== undefined) {
-        if(question.type === 'number') {
+      if (savedAnswer !== undefined) {
+        if (question.type === 'number') {
           $('input[type="number"]').val(savedAnswer);
-        } else if(question.type === 'textarea') {
+        } else if (question.type === 'textarea') {
           $('textarea').val(savedAnswer);
-        } else if(question.type === 'checkbox' && Array.isArray(savedAnswer)) {
+        } else if (question.type === 'checkbox' && Array.isArray(savedAnswer)) {
           savedAnswer.forEach(val => {
             $(`input[type="checkbox"][value="${val}"]`).prop('checked', true);
           });
-        } else if(question.type === 'radio') {
+        } else if (question.type === 'radio') {
           $(`input[type="radio"][value="${savedAnswer}"]`).prop('checked', true);
         }
       }
@@ -270,56 +270,69 @@
     function saveAnswer() {
       const question = questions[currentQuestionIndex];
       let answer;
-      if(question.type === 'number') {
+      if (question.type === 'number') {
         answer = $('input[type="number"]').val();
-      } else if(question.type === 'textarea') {
+      } else if (question.type === 'textarea') {
         answer = $('textarea').val();
-      } else if(question.type === 'checkbox') {
+      } else if (question.type === 'checkbox') {
         answer = [];
-        $('input[type="checkbox"]:checked').each(function(){
+        $('input[type="checkbox"]:checked').each(function () {
           answer.push($(this).val());
         });
-      } else if(question.type === 'radio') {
+      } else if (question.type === 'radio') {
         answer = $('input[type="radio"]:checked').val();
       }
       answers[question.id] = answer;
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
       renderQuestion();
 
-      $('#next-btn').click(async function(){
+      $('#next-btn').click(async function () {
         saveAnswer();
-        if(currentQuestionIndex < questions.length - 1) {
+        if (currentQuestionIndex < questions.length - 1) {
           currentQuestionIndex++;
           renderQuestion();
         } else {
           $("#quiz-container").hide()
           $("#back-btn").hide()
           $("#next-btn").hide()
-       
+
           $('#result').removeClass('hidden');
-        const response =  await fetch('https://one800-202510-dtc03.onrender.com/api',{
-            method:"POST",
+          const response = await fetch('https://proud-smoke-621f.tushitgarg123.workers.dev/', {
+            method: "POST",
             headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ questions, answers })
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ questions, answers })
           })
-          const rsp = await response.text()
-        
-         
-        const text= rsp.split('\n').join('<br/>')
-         
+          const rsp = await response.json()
+
+
+          const text = rsp.response
+
           $("#result").text(text);
-        
-         
+
+
+          firebase.auth().onAuthStateChanged(user => {
+            db.collection("assessments").add({
+              user: user.uid,
+              answers: JSON.stringify(answers),
+              ai: text,
+              last_updated: firebase.firestore.FieldValue.serverTimestamp(),
+
+
+            })
+
+          })
+
+
         }
       });
 
-      $('#back-btn').click(function(){
+      $('#back-btn').click(function () {
         saveAnswer();
-        if(currentQuestionIndex > 0) {
+        if (currentQuestionIndex > 0) {
           currentQuestionIndex--;
           renderQuestion();
         }
@@ -328,13 +341,13 @@
   </script>
 
   <!-- Footer -->
- 
+
   <div id="footer"></div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-<script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
-<script src="/scripts/renderer.js"></script>
+  <script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
+  <script src="/scripts/renderer.js"></script>
 </body>
 
 </html>
