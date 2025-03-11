@@ -120,3 +120,57 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.log(e.message);
     }
 });
+
+// Fetch and display comments
+const loadComments = async () => {
+    const commentsList = document.getElementById('comment-list');
+    commentsList.innerHTML = ''; // Clear existing comments
+
+    try {
+        const commentsSnapshot = await db.collection("posts").doc(postId).collection("comments").get();
+        commentsSnapshot.forEach(doc => {
+            const commentData = doc.data();
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'bg-gray-100 p-4 rounded-lg';
+
+            commentDiv.innerHTML = `
+                <p class="text-sm text-gray-500">Comment by u/${commentData.username} on ${commentData.createdAt.toDate().toLocaleString()}</p>
+                <p class="text-gray-700 mt-2">${commentData.content}</p>
+            `;
+            commentsList.appendChild(commentDiv);
+        });
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+    }
+};
+
+// Add a new comment to Firestore
+const addComment = async (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    const commentInput = document.getElementById('comment-input');
+    const commentContent = commentInput.value.trim();
+
+    if (commentContent) {
+        const user = firebase.auth().currentUser;
+
+        try {
+            await db.collection("posts").doc(postId).collection("comments").add({
+                username: user ? user.displayName : "Anonymous", // Use logged-in user's name
+                content: commentContent,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            commentInput.value = ''; // Clear the input field
+            loadComments(); // Reload the comments after adding
+        } catch (error) {
+            console.error("Error adding comment:", error);
+        }
+    }
+};
+
+// Event listener for comment form submission
+document.getElementById('comment-form').addEventListener('submit', addComment);
+
+// Load comments when the page is loaded
+window.addEventListener('DOMContentLoaded', loadComments);
