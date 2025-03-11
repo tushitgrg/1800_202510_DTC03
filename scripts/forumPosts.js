@@ -3,43 +3,6 @@ let loading = false; // Prevents multiple fetches at the same time
 const contentDiv = document.getElementById('content'); // Posts will be dynamically loaded here
 const loadingDiv = document.getElementById('loading'); // Target element for infinite scrolling
 
-const defaultPosts = new Array(10).fill({
-    username: "User123",
-    title: "Post title",
-    content: "Post body"
-});
-
-const testPosts = async () => {
-    let posts = []; // Initialize an empty array to hold the posts
-
-    try {
-        const querySnapshot = await db.collection("posts").get(); // Get all posts
-        querySnapshot.forEach(doc => {
-            const post = doc.data(); // Get post data
-            console.log("Username:", post.username);
-            console.log("Title:", post.title);
-            console.log("Content:", post.content);
-
-            // Add actual post data to the posts array
-            posts.push({
-                username: post.username,
-                title: post.title,
-                content: post.content
-            });
-        });
-
-        // Now `posts` contains all the posts from the database
-        console.log(posts); // Print all posts or use it elsewhere
-        return posts
-
-    } catch (error) {
-        console.error("Error fetching posts:", error);
-    }
-};
-
-testPosts();
-
-
 const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 const getPosts = async (page) => {
