@@ -2,75 +2,83 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Well Circle - Mental Health Community</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Well Circle - Mental Health Community</title>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase (Defer to prevent execution before DOM loads) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js" defer></script>
 
-<style>
-    a {
-      text-decoration: none;
-      color: black;
-    }
-  </style>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap & Tailwind -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-
- 
-  </style>
-
-
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
     <div id="header"></div>
+
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img class="mx-auto h-20 w-auto" src="./images/logo.png" alt="Your Company">
-          <h1 class="text-center font-bold text-indigo-600" style="color:#4F39F6 ;">Well Circle</h1>
-          <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+            <img class="mx-auto h-20 w-auto" src="./images/logo.png" alt="Your Company">
+            <h1 class="text-center font-bold text-indigo-600" style="color:#4F39F6;">Well Circle</h1>
+            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
         </div>
-      
+
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" >
-            <div>
-              <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
-              <div class="mt-2">
-                <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-              </div>
-            </div>
-      
-            <div>
-              <div class="flex items-center justify-between">
-                <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-                
-              </div>
-              <div class="mt-2">
-                <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-              </div>
-            </div>
-      
-            <div>
-              <button type="submit" id="signInButton" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-            </div>
-          </form>
-      
-        
+            <form class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-900">Email address</label>
+                    <div class="mt-2">
+                        <input type="email" id="email" autocomplete="email" required
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:border-indigo-600 focus:ring focus:ring-indigo-600 sm:text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+                    <div class="mt-2">
+                        <input type="password" id="password" autocomplete="current-password" required
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:border-indigo-600 focus:ring focus:ring-indigo-600 sm:text-sm">
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <p class="text-red-500 text-sm text-center" id="errorMessage"></p>
+
+                <!-- Sign In & Sign Up Buttons -->
+                <div>
+                    <button type="button" id="signInButton"
+                        class="w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600">
+                        Sign in
+                    </button>
+                </div>
+
+                <div>
+                    <button type="button" id="signUpButton"
+                        class="w-full justify-center rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-gray-800 hover:bg-gray-300">
+                        Create an Account
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
+    </div>
 
-  <div id="footer"></div>
+    <div id="footer"></div>
 
-<script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
-<script src="/scripts/authentication.js"></script>
-<script src="/scripts/renderer.js"></script>
+    <!-- Authentication Script -->
+    <script src="scripts/authentication.js" defer></script>
 
 </body>
 
