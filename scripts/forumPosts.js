@@ -9,11 +9,66 @@ const defaultPosts = new Array(10).fill({
     content: "Post body"
 });
 
+const testPosts = async () => {
+    let posts = []; // Initialize an empty array to hold the posts
+
+    try {
+        const querySnapshot = await db.collection("posts").get(); // Get all posts
+        querySnapshot.forEach(doc => {
+            const post = doc.data(); // Get post data
+            console.log("Username:", post.username);
+            console.log("Title:", post.title);
+            console.log("Content:", post.content);
+
+            // Add actual post data to the posts array
+            posts.push({
+                username: post.username,
+                title: post.title,
+                content: post.content
+            });
+        });
+
+        // Now `posts` contains all the posts from the database
+        console.log(posts); // Print all posts or use it elsewhere
+        return posts
+
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
+};
+
+testPosts();
+
+
 const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 const getPosts = async (page) => {
     await delay(1000); // Simulated delay for loading effect
-    return defaultPosts;
+    let posts = []; // Initialize an empty array to hold the posts
+
+    try {
+        const querySnapshot = await db.collection("posts").get(); // Get all posts
+        querySnapshot.forEach(doc => {
+            const post = doc.data(); // Get post data
+            console.log("Username:", post.username);
+            console.log("Title:", post.title);
+            console.log("Content:", post.content);
+
+            // Add actual post data to the posts array
+            posts.push({
+                username: post.username,
+                title: post.title,
+                content: post.content
+            });
+        });
+
+        // Now `posts` contains all the posts from the database
+        console.log(posts); // Print all posts or use it elsewhere
+        return posts
+
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
 };
 
 const appendData = (data) => {
