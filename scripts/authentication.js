@@ -1,20 +1,4 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyC46I7D7OqVNaIxh3CSBHbotWZ1ET72v-A",
-  authDomain: "wellcircle-52e5e.firebaseapp.com",
-  projectId: "wellcircle-52e5e",
-  storageBucket: "wellcircle-52e5e.firebasestorage.app",
-  messagingSenderId: "932065768756",
-  appId: "1:932065768756:web:03f87e42c7a45771682161",
-  measurementId: "G-G9JDFSSRTF"
-};
 
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-const db = firebase.firestore();
 const auth = firebase.auth();
 
 // Get login.html elements
