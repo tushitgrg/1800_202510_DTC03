@@ -228,7 +228,8 @@ document.getElementById('addReplyBtn').addEventListener('click',async(e)=>{
                 username: user.uid,
                 postedAt: firebase.firestore.FieldValue.serverTimestamp(),
                 likes:0,
-                liked_by:[]
+                liked_by:[],
+                userid: user.uid
             })
           
             const post = await getPost(postid)
