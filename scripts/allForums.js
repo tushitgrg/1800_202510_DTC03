@@ -7,6 +7,7 @@ const getPosts = async () => {
           const querySnapshot = await db.collection("posts").get(); // Get all posts
           querySnapshot.forEach(doc => {
               const post = doc.data(); // Get post data
+              post.id = doc.id;      
              console.log(post)
   if(!post.is_reply){
     posts.push(post);
@@ -34,7 +35,7 @@ const date = new Date(milliseconds);
         div.className = 'bg-white shadow-md rounded-lg p-4 border border-gray-300 hover:shadow-lg transition-all duration-200';
         
         // Encode parameters to ensure special characters don't break the URL
-        const postUrl = `post.html?username=${encodeURIComponent(item.username)}&title=${encodeURIComponent(item.title)}&content=${encodeURIComponent(item.content)}`;
+        const postUrl = `eachpost.html?id=${item.id}`;
         let tagshtml = ""
         item.category.forEach((i)=>{
             tagshtml+= `

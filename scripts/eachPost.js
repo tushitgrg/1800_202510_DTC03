@@ -49,7 +49,7 @@ const like = async (item1) => {
     })
 
 }
-window.addEventListener('DOMContentLoaded', async () => {
+const loadEverything = async()=>{
     try {
        
         const post = await getPost(postid);
@@ -65,6 +65,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
         console.log(e.message);
     }
+}
+window.addEventListener('DOMContentLoaded', async () => {
+ await loadEverything()
 });
 
 const appendPost = (item) => {
@@ -111,7 +114,7 @@ const appendPost = (item) => {
               
             </div>
         </div>`
-    document.getElementById('forumsection').innerHTML += html
+    document.getElementById('forumsection').innerHTML = html
     firebase.auth().onAuthStateChanged(async (user) => {
         if (item.liked_by.includes(user.uid)) {
             document.getElementById(`svg${item.id}`).setAttribute('fill', "violet")
@@ -182,7 +185,7 @@ const appendReplies = (replies) => {
         </div>`;
     }
     html += `</div>`;
-    document.getElementById('repliessection').innerHTML += html;
+    document.getElementById('repliessection').innerHTML = html;
 
     replies.forEach(item => {
         firebase.auth().onAuthStateChanged(async (user) => {
@@ -234,6 +237,8 @@ document.getElementById('addReplyBtn').addEventListener('click',async(e)=>{
             db.collection("posts").doc(postid).update({
                replies: replies
             })
+            document.getElementById("comment").value =""
+            await loadEverything()
         }
     })
  

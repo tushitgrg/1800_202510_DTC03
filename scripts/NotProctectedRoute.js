@@ -1,7 +1,7 @@
 firebase.auth().onAuthStateChanged(function (user) {
         
     if (user) { 
-        window.location.href= "/forum.html"
+        window.location.href= "/forums.html"
     }else{
        
     }
