@@ -3,10 +3,9 @@ let loading = false; // Prevents multiple fetches at the same time
 const contentDiv = document.getElementById('content'); // Posts will be dynamically loaded here
 const loadingDiv = document.getElementById('loading'); // Target element for infinite scrolling
 
-const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 const getPosts = async (page) => {
-    await delay(1000); // Simulated delay for loading effect
+  // Simulated delay for loading effect
     let posts = []; // Initialize an empty array to hold the posts
 
     try {
@@ -16,13 +15,10 @@ const getPosts = async (page) => {
             console.log("Username:", post.username);
             console.log("Title:", post.title);
             console.log("Content:", post.content);
+            
 
             // Add actual post data to the posts array
-            posts.push({
-                username: post.username,
-                title: post.title,
-                content: post.content
-            });
+            posts.push(post);
         });
 
         // Now `posts` contains all the posts from the database
@@ -43,11 +39,28 @@ const appendData = (data) => {
         const postUrl = `post.html?username=${encodeURIComponent(item.username)}&title=${encodeURIComponent(item.title)}&content=${encodeURIComponent(item.content)}`;
         
         div.innerHTML = `
-            <a href="${postUrl}" class="block">
-                <p class="text-sm text-gray-500">Posted by u/${item.username}</p>
-                <h3 class="text-lg font-bold text-gray-900 mt-1">${item.title}</h3>
-                <p class="text-gray-700 mt-2">${item.content}</p>
+         <a href="${postUrl}" class="block">
+           <div class="p-4 hover:bg-gray-50 transition cursor-pointer">
+                <div class="flex items-start">
+                    <img src="https://i.pravatar.cc/40?img=2" alt="User avatar" class="w-10 h-10 rounded-full mr-4">
+                    <div class="flex-1">
+                        <h4 class="text-lg font-medium text-gray-800">${item.title}</h4>
+                        <div class="flex items-center text-sm text-gray-500 mt-1">
+                            <span>Posted by <span class="text-indigo-600">${item.username}</span></span>
+                            <span class="mx-2">•</span>
+                            <span>Yesterday</span>
+                            <span class="mx-2">•</span>
+                            <span>${item.replies.length}</span>
+                        </div>
+                        <p class="text-gray-600 mt-2 line-clamp-2">${item.content.slice(0,100)}..</p>
+                    </div>
+                    <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                        Tips
+                    </div>
+                </div>
+            </div>
             </a>
+          
         `;
 
         contentDiv.appendChild(div);
