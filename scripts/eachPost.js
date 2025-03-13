@@ -218,14 +218,14 @@ const addFakeReplies = async () => {
 document.getElementById('addReplyBtn').addEventListener('click',async(e)=>{
     e.preventDefault()
     firebase.auth().onAuthStateChanged(async (user) => {
-    
+    console.log(user)
         let val =document.getElementById("comment").value
         if(val){
            const docref =await  db.collection("posts").add({
                 category: "reply",
                 content: val,
                 is_reply: true,
-                username: user.uid,
+                username: user.displayName,
                 postedAt: firebase.firestore.FieldValue.serverTimestamp(),
                 likes:0,
                 liked_by:[],

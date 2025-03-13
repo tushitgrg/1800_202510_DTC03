@@ -8,7 +8,7 @@ const Createpost = async(e)=>{
             category: catInput.value.split(','),
             content: contentInput.value,
             is_reply: false,
-            username: user.uid,
+            username: user.displayName,
             postedAt: firebase.firestore.FieldValue.serverTimestamp(),
             likes:0,
             liked_by:[],
