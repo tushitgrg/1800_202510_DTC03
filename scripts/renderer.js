@@ -1,6 +1,6 @@
 function renderPage(){
-
-     firebase.auth().onAuthStateChanged(function (user) {
+try{
+    firebase.auth().onAuthStateChanged(function (user) {
         
         if (user) {   
         
@@ -16,6 +16,11 @@ function renderPage(){
 
         }
     });
+}catch (e){
+    console.log($('#header').load('../components/header.html'));
+    console.log($('#footer').load('../components/footer.html'));
+}
+    
     
   
      
