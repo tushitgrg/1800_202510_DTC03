@@ -36,7 +36,7 @@
     <div class="bg-black bg-opacity-50 p-8 rounded-lg">
         <h1 class="text-4xl font-bold">Hello User</h1>
         <p class="mt-2">This is your profile page. You can edit your information, take a quiz, and see your progress.</p>
-        <button class="mt-4 px-6 py-2 bg-indigo-600 rounded-md">Edit Profile</button>
+        <button class="mt-4 px-6 py-2 bg-indigo-600 rounded-md" onclick="editUserInfo()">Edit Profile</button>
     </div>
 </header>
 
@@ -49,8 +49,8 @@
                 <img class="w-24 h-24 rounded-full border-4 border-white" src="https://i.pinimg.com/736x/d3/86/17/d386172d7a142861c4e00d748e4210af.jpg">
             </div>
             <div class="text-center p-4">
-                <h3 class="text-xl font-bold">Username</h3>
-                <p class="text-gray-600">Additional info</p>
+                <h3 id="usernameDisplay "class="text-xl font-bold">Username</h3>
+                <p class="text-gray-600">Status</p>
                 <div class="mt-4 flex justify-center space-x-4">
                     <!-- <button class="px-4 py-2 bg-indigo-600 text-white rounded-md">Connect</button>
                     <button class="px-4 py-2 bg-gray-300 rounded-md">Message</button> -->
@@ -64,29 +64,33 @@
         <div class="bg-white shadow-md rounded-lg p-6">
             <h3 class="text-xl font-bold mb-4">My Account</h3>
             <form>
+              <fieldset id="personalInfoFields" disabled>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-gray-600">Username</label>
-                        <input type="text" class="w-full px-4 py-2 border rounded-md" value="lucky.jesse">
+                      <label class="block text-gray-600" for="nameInput">Username</label>
+                      <input id="nameInput" type="text" class="w-full px-4 py-2 border rounded-md" placeholder="Enter your username">
+                      
                     </div>
                     <div>
                         <label class="block text-gray-600">Email</label>
-                        <input type="email" class="w-full px-4 py-2 border rounded-md" value="jesse@example.com">
+                        <input id="emailInput" type="email" id="email" class="w-full px-4 py-2 border rounded-md" placeholder="Your email" readonly>
                     </div>
                     <div>
-                        <label class="block text-gray-600">First Name</label>
-                        <input type="text" class="w-full px-4 py-2 border rounded-md" value="Lucky">
+                        <label id="ageInput"class="block text-gray-600">Age</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-md" placeholder="Enter your age">
                     </div>
                     <div>
-                        <label class="block text-gray-600">Last Name</label>
-                        <input type="text" class="w-full px-4 py-2 border rounded-md" value="Jesse">
+                        <label id="pronounsInput" class="block text-gray-600">Pronouns</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-md" placeholder="Enter your pronouns">
                     </div>
                 </div>
                 <div class="mt-4">
                     <label class="block text-gray-600">About Me</label>
-                    <textarea class="w-full px-4 py-2 border rounded-md" rows="4">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                    <textarea class="w-full px-4 py-2 border rounded-md" rows="4" placeholder="Write something about you!"></textarea>
                 </div>
+              </fieldset>
             </form>
+            <button id="saveChangesButton" class="mt-4 px-6 py-2 bg-indigo-600 rounded-md text-white hidden" onclick="saveUserInfo()">Save changes</button>
         </div>
     </div>
 </div>
@@ -108,9 +112,10 @@
       <p class="text-gray-600 text-center mt-2 px-4">
           Take our mental health quiz to gain insights into your well-being and get personalized tips!
       </p>
-      <button class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
-          Take Quiz
-      </button>
+      <button class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition duration-300">
+        Take Quiz
+    </button>
+    
   </div>
 </div>
 
