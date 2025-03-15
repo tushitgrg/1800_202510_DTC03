@@ -8,9 +8,9 @@ function populateUserInfo() {
                 .then(userDoc => {
                     if (userDoc.exists) {
                         let data = userDoc.data();
-                        console.log(data)
+                        console.log(data);
                         // Populate input fields
-                        if (data.username) {
+                        if (data.name) {
                             document.getElementById("nameInput").value = data.name;
                             document.getElementById("usernameDisplay").textContent = data.name;
                         }
@@ -35,7 +35,9 @@ function populateUserInfo() {
 populateUserInfo();
 
 function editUserInfo() {
-    document.getElementById('personalInfoFields').removeAttribute("disabled");
+    document.getElementById('nameInput').removeAttribute("disabled");
+    document.getElementById('ageInput').removeAttribute("disabled");
+    document.getElementById('pronounsInput').removeAttribute("disabled");
     document.getElementById("saveChangesButton").classList.remove("hidden");
 }
 
@@ -45,7 +47,7 @@ function saveUserInfo() {
     let userAge = document.getElementById('ageInput').value;
     
     currentUser.update({
-        username: userName,
+        name: userName,
         pronouns: userPronouns,
         age: userAge
     })
@@ -55,6 +57,8 @@ function saveUserInfo() {
     })
     .catch(error => console.error("Error updating document:", error));
 
-    document.getElementById('personalInfoFields').setAttribute("disabled", "true");
+    document.getElementById('nameInput').setAttribute("disabled", "true");
+    document.getElementById('ageInput').setAttribute("disabled", "true");
+    document.getElementById('pronounsInput').setAttribute("disabled", "true");
     document.getElementById("saveChangesButton").classList.add("hidden");
 }
