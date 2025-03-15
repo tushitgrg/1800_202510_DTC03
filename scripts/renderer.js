@@ -6,9 +6,7 @@ try{
         
             console.log($('#header').load('../components/login_header.html'));
             console.log($('#footer').load('../components/footer.html'));
-            document.getElementById("logoutbtn").addEventListener('click',()=>{
-                alert()
-            })
+           
         } else {
             // No user is signed in.
             console.log($('#header').load('../components/header.html'));
