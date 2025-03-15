@@ -23,6 +23,9 @@ function populateUserInfo() {
                         if (data.email) {
                             document.getElementById("emailInput").value = data.email;
                         }
+                        if (data.aboutMe) {
+                            document.getElementById("aboutMeInput").value = data.aboutMe;
+                        }
                     }
                 })
                 .catch(error => console.error("Error getting user data:", error));
@@ -38,6 +41,7 @@ function editUserInfo() {
     document.getElementById('nameInput').removeAttribute("disabled");
     document.getElementById('ageInput').removeAttribute("disabled");
     document.getElementById('pronounsInput').removeAttribute("disabled");
+    document.getElementById('aboutMeInput').removeAttribute("disabled");
     document.getElementById("saveChangesButton").classList.remove("hidden");
 }
 
@@ -45,11 +49,13 @@ function saveUserInfo() {
     let userName = document.getElementById('nameInput').value;
     let userPronouns = document.getElementById('pronounsInput').value;
     let userAge = document.getElementById('ageInput').value;
+    let aboutMe = document.getElementById('aboutMeInput').value;
     
     currentUser.update({
         name: userName,
         pronouns: userPronouns,
-        age: userAge
+        age: userAge,
+        aboutMe: aboutMe
     })
     .then(() => {
         console.log("Document successfully updated!");
@@ -60,5 +66,6 @@ function saveUserInfo() {
     document.getElementById('nameInput').setAttribute("disabled", "true");
     document.getElementById('ageInput').setAttribute("disabled", "true");
     document.getElementById('pronounsInput').setAttribute("disabled", "true");
+    document.getElementById('aboutMeInput').setAttribute("disabled", "true");
     document.getElementById("saveChangesButton").classList.add("hidden");
 }
