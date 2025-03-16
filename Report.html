@@ -6,28 +6,29 @@
     <title>Test Results</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 </head>
-<body style="display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; background-color: #f5f5f5; padding: 20px; padding-top: 80px;">
+<body style="display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; background: url(https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) no-repeat center center fixed; background-size: cover; padding: 20px; padding-top: 80px;">
     <div class="results-container" style="width: 90%; max-width: 800px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; display: flex; flex-direction: column; align-items: center; margin-top: auto;">
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-            <div id="lottie-left" style="width: 100px; height: 100px;"></div>
+            <img src="images/row (1).png" alt="Left Decorative Graphic" style="width: 100px; height: 100px;">
             <h1>Your Results Are Ready!</h1>
-            <div id="lottie-right" style="width: 100px; height: 100px;"></div>
+            <img src="images/row (2).png" alt="Right Decorative Graphic" style="width: 100px; height: 100px;">
         </div>
         
         <div class="score-card">
             <h2>Your Personalized Report</h2>
             <div class="slider-container">
-                <input type="range" min="0" max="100" value="60" class="slider" id="scoreSlider" disabled>
-                <span class="score-bubble">60</span> 
+                <input type="range" min="0" max="100" value="60" class="slider" id="scoreSlider" disabled style="width: 100%; height: 16px; accent-color: #4F46E5;">
+                <span class="score-bubble" style="font-weight: bold; color: #4F46E5; margin-bottom: 10px;">60</span> 
             </div>
-            <div class="score-legend">
-                <p><span class="range struggling">20-39</span> — Struggling</p>
-                <p><span class="range somewhat-struggling">40-54</span> — Struggling somewhat</p>
-                <p><span class="range coping">55-74</span> — Coping</p>
-                <p><span class="range coping-well">75-89</span> — Coping well</p>
-                <p><span class="range flourishing">90-100</span> — Flourishing</p>
+            <div class="section-container" style="background: #D1D5FF; padding: 10px; border: 1px solid #4F46E5; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1); margin-bottom: 10px; margin-top: 10px; text-align: center;">
+                <div class="score-legend" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; text-align: left; font-size: 14px;">
+                    <p><span class="range struggling">20-39</span> — Struggling</p>
+                    <p><span class="range somewhat-struggling">40-54</span> — Struggling somewhat</p>
+                    <p><span class="range coping">55-74</span> — Coping</p>
+                    <p><span class="range coping-well">75-89</span> — Coping well</p>
+                    <p><span class="range flourishing">90-100</span> — Flourishing</p>
+                </div>
             </div>
         </div>
 
@@ -80,23 +81,6 @@
 
     <footer style="background: white; padding: 15px; text-align: center; box-shadow: 0px -2px 5px rgba(0,0,0,0.1); width: 100%; position: relative; bottom: 0; margin-top: auto;">
         <p>&copy; 2025 WellCircle. All rights reserved.</p>
-    </footer>
-    <script>
-        var leftAnimation = lottie.loadAnimation({
-            container: document.getElementById('lottie-left'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'left-lottie.json' // Replace with the actual Lottie file path
-        });
-
-        var rightAnimation = lottie.loadAnimation({
-            container: document.getElementById('lottie-right'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'right-lottie.json' // Replace with the actual Lottie file path
-        });
-    </script>
+    </footer>        
 </body>
 </html>
