@@ -9,6 +9,8 @@
 </head>
 <body style="background: url(https://images.pexels.com/photos/163999/pexels-photo-163999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) no-repeat center center fixed; background-size: cover; color: white; text-align: center; padding: 20px;">
 
+    <button id="toggle-night-mode" style="position: absolute; top: 20px; right: 20px; padding: 8px 12px; background: black; color: white; border: none; border-radius: 5px; cursor: pointer;">Night Mode</button>
+
     <h1 style="font-size: 36px; font-weight: bold; margin-bottom: 20px; text-align: left;">WellCircle Resources</h1>
 
     <div class="resources-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1000px; margin: auto;">
@@ -17,31 +19,78 @@
         <div class="resource-card" style="background: rgba(255, 0, 0, 0.8); padding: 20px; border-radius: 10px; width: 45%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h2><i class="fas fa-phone-alt" style="color: white; margin-right: 10px;"></i> Emergency Help</h2>
             <p>If you're in crisis, reach out for immediate support.</p>
-            <a href="#" style="color: white; text-decoration: underline;">Find Hotlines</a>
+            <button class="toggle-info" style="margin-top: 10px; padding: 8px 12px; background: white; color: black; border: none; border-radius: 5px; cursor: pointer;">More Info</button>
+            <p class="hidden-info" style="display: none; margin-top: 10px;">Additional details about this resource.</p>
         </div>
 
         <!-- Therapy & Counseling -->
         <div class="resource-card" style="background: rgba(0, 123, 255, 0.8); padding: 20px; border-radius: 10px; width: 45%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h2><i class="fas fa-user-md" style="color: white; margin-right: 10px;"></i> Therapy & Counseling</h2>
             <p>Find professional therapy and counseling services.</p>
-            <a href="#" style="color: white; text-decoration: underline;">Browse Therapists</a>
+            <button class="toggle-info" style="margin-top: 10px; padding: 8px 12px; background: white; color: black; border: none; border-radius: 5px; cursor: pointer;">More Info</button>
+            <p class="hidden-info" style="display: none; margin-top: 10px;">Additional details about this resource.</p>
         </div>
 
         <!-- Self-Help & Education -->
         <div class="resource-card" style="background: rgba(40, 167, 69, 0.8); padding: 20px; border-radius: 10px; width: 45%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h2><i class="fas fa-book-open" style="color: white; margin-right: 10px;"></i> Self-Help & Education</h2>
             <p>Explore self-help guides and mental health education.</p>
-            <a href="#" style="color: white; text-decoration: underline;">Learn More</a>
+            <button class="toggle-info" style="margin-top: 10px; padding: 8px 12px; background: white; color: black; border: none; border-radius: 5px; cursor: pointer;">More Info</button>
+            <p class="hidden-info" style="display: none; margin-top: 10px;">Additional details about this resource.</p>
         </div>
 
         <!-- Community & Support Groups -->
         <div class="resource-card" style="background: rgba(255, 193, 7, 0.8); padding: 20px; border-radius: 10px; width: 45%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h2><i class="fas fa-users" style="color: white; margin-right: 10px;"></i> Community & Support Groups</h2>
             <p>Join a community for peer support and discussions.</p>
-            <a href="#" style="color: white; text-decoration: underline;">Join Now</a>
+            <button class="toggle-info" style="margin-top: 10px; padding: 8px 12px; background: white; color: black; border: none; border-radius: 5px; cursor: pointer;">More Info</button>
+            <p class="hidden-info" style="display: none; margin-top: 10px;">Additional details about this resource.</p>
         </div>
 
     </div>
+    
+    <script>
+        document.querySelectorAll('.toggle-info').forEach(button => {
+            button.addEventListener('click', function() {
+                let info = this.nextElementSibling;
+                if (info.style.display === "none") {
+                    info.style.display = "block";
+                    this.textContent = "Show Less";
+                } else {
+                    info.style.display = "none";
+                    this.textContent = "More Info";
+                }
+            });
+        });
+
+        document.getElementById('toggle-night-mode').addEventListener('click', function() {
+            let body = document.body;
+            let cards = document.querySelectorAll('.resource-card');
+
+            if (body.classList.contains('night-mode')) {
+                // Switch to Light Mode
+                body.classList.remove('night-mode');
+                body.style.background = "url(https://images.pexels.com/photos/163999/pexels-photo-163999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) no-repeat center center fixed";
+                body.style.color = "white";
+                cards.forEach(card => card.style.background = card.dataset.originalColor);
+                this.textContent = "Night Mode";
+                this.style.background = "black";
+                this.style.color = "white";
+            } else {
+                // Switch to Night Mode
+                body.classList.add('night-mode');
+                body.style.background = "black";
+                body.style.color = "#ddd";
+                cards.forEach(card => {
+                    card.dataset.originalColor = card.style.background;
+                    card.style.background = "#222";
+                });
+                this.textContent = "Light Mode";
+                this.style.background = "white";
+                this.style.color = "black";
+            }
+        });
+    </script>
 
 </body>
 </html>
