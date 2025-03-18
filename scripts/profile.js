@@ -13,6 +13,7 @@ function populateUserInfo() {
                         if (data.name) {
                             document.getElementById("nameInput").value = data.name;
                             document.getElementById("usernameDisplay").textContent = data.name;
+                            document.getElementById("helloUser").textContent = "Hello " + data.name;
                         }
                         if (data.pronouns) {
                             document.getElementById("pronounsInput").value = data.pronouns;
@@ -63,9 +64,10 @@ function saveUserInfo() {
     .then(() => {
         console.log("Document successfully updated!");
         document.getElementById("usernameDisplay").textContent = userName;
+        document.getElementById("helloUser").textContent = "Hello " + userName;
         if (userAge && userPronouns) {
             document.getElementById("extraInfo").textContent = userAge + ", " + userPronouns;
-        }
+        } 
     })
     .catch(error => console.error("Error updating document:", error));
 
