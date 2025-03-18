@@ -20,6 +20,9 @@ function populateUserInfo() {
                         if (data.age) {
                             document.getElementById("ageInput").value = data.age;
                         }
+                        if (data.age && data.pronouns) {
+                            document.getElementById("extraInfo").textContent = data.age + ", " + data.pronouns;
+                        }
                         if (data.email) {
                             document.getElementById("emailInput").value = data.email;
                         }
@@ -60,6 +63,9 @@ function saveUserInfo() {
     .then(() => {
         console.log("Document successfully updated!");
         document.getElementById("usernameDisplay").textContent = userName;
+        if (userAge && userPronouns) {
+            document.getElementById("extraInfo").textContent = userAge + ", " + userPronouns;
+        }
     })
     .catch(error => console.error("Error updating document:", error));
 
@@ -68,4 +74,5 @@ function saveUserInfo() {
     document.getElementById('pronounsInput').setAttribute("disabled", "true");
     document.getElementById('aboutMeInput').setAttribute("disabled", "true");
     document.getElementById("saveChangesButton").classList.add("hidden");
+
 }
