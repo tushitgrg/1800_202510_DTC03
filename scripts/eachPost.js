@@ -1,18 +1,33 @@
 const paramsString = window.location.search;
 const searchParams = new URLSearchParams(paramsString);
 const postid = searchParams.get('id')
+
 const getPost = async (postid) => {
-
-
-    data = undefined
-    await db.collection("posts").doc(postid).get().then((doc) => {
-        data = doc.data()
-        data.id = postid
-        console.log(data)
-
-    })
-    return data
-}
+    try {
+      // Retrieve the post document by its ID
+      const doc = await db.collection("posts").doc(postid).get();
+  
+      if (!doc.exists) {
+        console.warn(`Post with id ${postid} not found.`);
+        return undefined;
+      }
+  
+      // Get the post data and assign the post ID
+      const data = doc.data();
+      data.id = postid;
+  
+      // Retrieve the user document for the post's author
+      const userDoc = await db.collection("users").doc(data.userid).get();
+      data.user = userDoc.exists ? userDoc.data() : null;
+  
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      throw error;
+    }
+  };
+  
 
 const like = async (item1) => {
     if (document.getElementById(`svg${item1.id}`).getAttribute('fill') != "none") {
@@ -73,7 +88,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 const appendPost = (item) => {
 
     const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
-
+    let avatar = `https://avatar.iran.liara.run/public/${Math.floor(Math.random()*10)}`
+    if(item.user){
+        if(item.user.avatar){
+            avatar = item.user.avatar
+        }
+       
+    }
     // Create a Date object
     const date = new Date(milliseconds);
 
@@ -86,7 +107,7 @@ const appendPost = (item) => {
             </div>
             
             <div class="flex items-center mb-6">
-                <img src="https://avatar.iran.liara.run/public/${Math.floor(Math.random() * 10)}" alt="User avatar" class="w-10 h-10 rounded-full mr-3">
+                <img src="${avatar}" alt="User avatar" class="w-10 h-10 rounded-full mr-3">
                 <div>
                     <div class="font-medium text-indigo-600">${item.username}</div>
                     <div class="text-sm text-gray-500">Posted ${date.toDateString()}</div>
@@ -128,34 +149,73 @@ const appendPost = (item) => {
     })
 }
 
+// async function getallReplies(item) {
+//     let replies = []
+//     const itemReplies = item.replies
+//     for (let i = 0; i < itemReplies.length; i++) {
+//         if (!itemReplies[i]) continue
+//         await db.collection("posts").doc(itemReplies[i]).get().then((doc) => {
+//             dt = doc.data()
+//             dt.id = itemReplies[i]
+//             replies.push(dt)
+
+
+//         })
+//     }
+//     console.log(replies)
+//     return replies
+
+// }
+
 async function getallReplies(item) {
-    let replies = []
-    const itemReplies = item.replies
-    for (let i = 0; i < itemReplies.length; i++) {
-        if (!itemReplies[i]) continue
-        await db.collection("posts").doc(itemReplies[i]).get().then((doc) => {
-            dt = doc.data()
-            dt.id = itemReplies[i]
-            replies.push(dt)
-
-
-        })
+    try {
+      // Ensure the replies array exists and filter out any falsy values
+      const replyIds = Array.isArray(item.replies) ? item.replies.filter(Boolean) : [];
+      
+      // Map each reply ID to a promise that fetches the reply and its associated user data
+      const replyPromises = replyIds.map(async (replyId) => {
+        const doc = await db.collection("posts").doc(replyId).get();
+        if (doc.exists) {
+          const data = doc.data();
+          data.id = replyId;
+          // Fetch the user data for the reply's author
+          const userDoc = await db.collection("users").doc(data.userid).get();
+          data.user = userDoc.exists ? userDoc.data() : null;
+          return data;
+        }
+        return null; // Return null for non-existent replies
+      });
+      
+      // Wait for all reply promises to resolve
+      const replies = await Promise.all(replyPromises);
+      // Filter out any null responses (replies that didn't exist)
+      const validReplies = replies.filter(reply => reply !== null);
+      
+      console.log(validReplies);
+      return validReplies;
+    } catch (error) {
+      console.error("Error fetching replies:", error);
+      throw error;
     }
-    console.log(replies)
-    return replies
-
-}
+  }
+  
 const appendReplies = (replies) => {
     let html = `<div class="space-y-6" id="allreplies">`;
     for (let i = 0; i < replies.length; i++) {
         let item = replies[i];
         const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
         const date = new Date(milliseconds);
-
+        let avatar = `https://avatar.iran.liara.run/public/${Math.floor(Math.random()*10)}`
+        if(item.user){
+            if(item.user.avatar){
+                avatar = item.user.avatar
+            }
+           
+        }
         html += `
         <div class="bg-white rounded-lg shadow-md p-6">
           <div class="flex items-start">
-            <img src="https://avatar.iran.liara.run/public/${Math.floor(Math.random() * 10)}" alt="User avatar" class="w-10 h-10 rounded-full mr-4">
+            <img src="${avatar}" alt="User avatar" class="w-10 h-10 rounded-full mr-4">
             <div class="flex-1">
               <div class="flex items-center justify-between mb-2">
                 <div>
