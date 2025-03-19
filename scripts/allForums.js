@@ -14,6 +14,12 @@ const getPosts = async () => {
           
           post.id = doc.id;
           post.user = userDoc.data();
+          if(userDoc.data()){
+            if(userDoc.data().name){
+                post.username = userDoc.data().name
+            }
+         
+          }
       
           // Only include posts that are not replies
           return !post.is_reply ? post : null;

@@ -19,7 +19,12 @@ const getPost = async (postid) => {
       // Retrieve the user document for the post's author
       const userDoc = await db.collection("users").doc(data.userid).get();
       data.user = userDoc.exists ? userDoc.data() : null;
-  
+      if(userDoc.data()){
+        if(userDoc.data().name){
+            data.username = userDoc.data().name
+        }
+     
+      }
       console.log(data);
       return data;
     } catch (error) {
@@ -181,6 +186,12 @@ async function getallReplies(item) {
           // Fetch the user data for the reply's author
           const userDoc = await db.collection("users").doc(data.userid).get();
           data.user = userDoc.exists ? userDoc.data() : null;
+          if(userDoc.data()){
+            if(userDoc.data().name){
+                data.username = userDoc.data().name
+            }
+         
+          }
           return data;
         }
         return null; // Return null for non-existent replies
