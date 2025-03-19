@@ -54,11 +54,21 @@
       <!-- Profile Card -->
       <div class="w-full md:w-1/3 p-4">
         <div class="bg-white shadow-md rounded-lg">
-          <div class="flex justify-center">
+          <div class="flex flex-col items-center justify-center" >
             <img
-              class="w-24 h-24 rounded-full border-4 border-white"
+              class="w-24 h-24 rounded-full border-4 border-white" id="avatarImg"
               src="https://i.pinimg.com/736x/d3/86/17/d386172d7a142861c4e00d748e4210af.jpg"
             />
+            <label class="invisible" id="avatarDiv">
+              <span class="sr-only">Choose profile photo</span>
+              <input type="file" id="avatarInput" accept="image/*" class="block w-full text-sm text-slate-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-violet-50 file:text-violet-700
+                hover:file:bg-violet-100
+              "/>
+            </label>
           </div>
           <div class="text-center pb-2">
             <h3 id="usernameDisplay" class="text-xl font-bold">Username</h3>
