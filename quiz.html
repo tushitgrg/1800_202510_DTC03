@@ -311,21 +311,21 @@
 
           const text = rsp.response
 
-          $("#result").text(text);
+    
 
 
-          firebase.auth().onAuthStateChanged(user => {
-            db.collection("assessments").add({
+            firebase.auth().onAuthStateChanged(async (user) => {
+              const docref = await db.collection("assessments").add({
               user: user.uid,
               answers: JSON.stringify(answers),
-              ai: text,
+              ai: JSON.parse(text),
               last_updated: firebase.firestore.FieldValue.serverTimestamp(),
 
 
             })
-
+          window.location.href= `quizreport.html?id=${docref.id}`
           })
-
+     
 
         }
       });
@@ -342,7 +342,7 @@
 
   <!-- Footer -->
 
-  <div id="footer"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
