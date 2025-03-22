@@ -1,15 +1,15 @@
 [
     {
       "title": "4 Ways To Get Through Spring Depression",
-      "description": "Discover effective strategies to manage and overcome springtime depression, anxiety, and seasonal affective disorder.",
+      "description": "Understanding seasonal affective disorder and how to overcome springtime depression.",
       "category": "depression",
       "imageUrl": "https://assets.betterhelp.com/advice/images/f14341d32ff141be2e4b573ca603e870-kids-away-tips-for-a-new-empty-nester_1_l.jpg",
       "articleLink": "https://www.betterhelp.com/advice/depression/4-ways-to-get-through-spring-depression-anxiety-and-seasonal-affective-disorder/",
       "recent": true
     },
     {
-      "title": "What causes depression?",
-      "description": "Onset of depression more complex than a brain chemical imbalance.",
+      "title": "What causes depression? Discover New Insights",
+      "description": "Researcher's say Onset of depression more complex than a brain chemical imbalance, and other new insights.",
       "category": "depression",
       "imageUrl": "https://domf5oio6qrcr.cloudfront.net/medialibrary/12138/c54694ac-31a8-43b0-b4f8-5b5395f3bbbf.jpg",
       "articleLink": "https://www.health.harvard.edu/mind-and-mood/what-causes-depression"
@@ -21,5 +21,15 @@
         "imageUrl": "https://images.pexels.com/photos/6214833/pexels-photo-6214833.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "articleLink": "hhttps://www.medicalnewstoday.com/articles/145855",
         "recent": true
+     },
+        {
+            "title": "Anxiety: What it is, and how to manage it",
+            "description": "Understanding anxiety, how it affects your everyday life, and how to manage it",
+            "category": "anxiety",
+            "imageUrl": "https://domf5oio6qrcr.cloudfront.net/medialibrary/9475/iStock-693982796.jpg",
+            "articleLink": "https://www.health.harvard.edu/blog/anxiety-what-it-is-what-to-do-2018060113955",
+            "recent": true
+
         }
+
     ]
