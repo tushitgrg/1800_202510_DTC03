@@ -32,7 +32,7 @@
         },
         {
             "title": "Emotional and Psychological Trauma",
-            "description": "When bad things happen, it can take a while to get over the pain and feel safe again. But with these self-help strategies and support, you can speed up your recovery.",
+            "description": "It can be hard to understand trauma, but with these self-help strategies and support, you can heal.",
             "category": "trauma",
             "imageUrl": "https://images.pexels.com/photos/6753373/pexels-photo-6753373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             "articleLink": "https://www.helpguide.org/mental-health/ptsd-trauma/coping-with-emotional-and-psychological-trauma"
@@ -51,6 +51,20 @@
             "category": "self-esteem",
             "imageUrl": "https://images.pexels.com/photos/3781529/pexels-photo-3781529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             "articleLink": "https://medcraveonline.com/JPNC/self-esteem-a-study-on-the-relationship-between-self-esteem-and-factors-affecting-student-life.html"
+        },
+        {
+            "title": "what are anxiety disorders?",
+            "description": "Learn about the different types of anxiety disorders and how they can affect your life.",
+            "category": "anxiety",
+            "imageUrl": "https://images.pexels.com/photos/3656855/pexels-photo-3656855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "articleLink": "https://www.psychiatry.org/patients-families/anxiety-disorders/what-are-anxiety-disorders?gad_source=1&gbraid=0AAAAADeo12TIOdU4kXxb8yq_AGsPywQrm&gclid=EAIaIQobChMIsqDVn76ejAMVgQ2tBh3HihbyEAAYAyAAEgI2hvD_BwE"
+        },
+        {
+            "title": "Trauma: Its Realities and Long-Term Impacts",
+            "description": "Understand trauma and its long-term impacts on mental health, finding the advice you need today to live a better tomorrow.",
+            "category": "trauma",
+            "imageUrl": "https://storage.googleapis.com/metime-cms-bucket/Screen_Shot_2024_06_28_at_4_02_45_PM_dc4bfdb5ee/Screen_Shot_2024_06_28_at_4_02_45_PM_dc4bfdb5ee.png",
+            "articleLink": "https://www.metimehealing.com/mindfulness/blog/trauma-its-realities-and-long-term-impacts?gad_source=1&gbraid=0AAAAApd4hXHLKw9ey4KGchUnWd3VXbI2e&gclid=EAIaIQobChMI1JCfpr-ejAMVeQitBh0m2AzLEAAYAyAAEgKCV_D_BwE"
         }
 
     ]   
