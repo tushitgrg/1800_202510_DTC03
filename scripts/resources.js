@@ -4,12 +4,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterButtons = document.querySelectorAll(".category-btn");
   
     function setCardVisibility(category) {
-      const allCards = document.querySelectorAll(".article-card, .video-card");
-  
-      allCards.forEach((card) => {
-        const cardCategory = card.getAttribute("data-category").toLowerCase();
-        card.style.display =
-          category === "all" || cardCategory === category ? "block" : "none";
+      const recentSection = document.getElementById("recent-section");
+      const videosSection = document.getElementById("videos-section");
+      
+      if (category === "all") {
+        if (recentSection) recentSection.style.display = "block";
+        if (videosSection) videosSection.style.display = "block";
+      } else {
+        if (recentSection) recentSection.style.display = "none";
+        if (videosSection) videosSection.style.display = "none";
+      }
+      
+      const allSections = document.querySelectorAll(".category-section");
+
+      allSections.forEach((section) => {
+        const sectionCategory = section.getAttribute("data-category").toLowerCase();
+        section.style.display =
+          category === "all" || sectionCategory === category ? "block" : "none";
       });
   
       filterButtons.forEach((btn) => {
