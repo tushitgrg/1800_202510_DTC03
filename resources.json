@@ -29,7 +29,13 @@
             "imageUrl": "https://domf5oio6qrcr.cloudfront.net/medialibrary/9475/iStock-693982796.jpg",
             "articleLink": "https://www.health.harvard.edu/blog/anxiety-what-it-is-what-to-do-2018060113955",
             "recent": true
+        },
+        {
+            "title": "Emotional and Psychological Trauma",
+            "description": "When bad things happen, it can take a while to get over the pain and feel safe again. But with these self-help strategies and support, you can speed up your recovery.",
+            "category": "trauma",
+            "imageUrl": "https://images.pexels.com/photos/6753373/pexels-photo-6753373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "articleLink": "https://www.helpguide.org/mental-health/ptsd-trauma/coping-with-emotional-and-psychological-trauma"
 
         }
-
     ]
