@@ -37,5 +37,20 @@
             "imageUrl": "https://images.pexels.com/photos/6753373/pexels-photo-6753373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             "articleLink": "https://www.helpguide.org/mental-health/ptsd-trauma/coping-with-emotional-and-psychological-trauma"
 
+        },
+        {
+            "title": "The Mutual Connection Between Healthy Relationships and Mental Health",
+            "description": "The connection between healthy relationships and mental health is a strong one. Learn more about how to foster healthy relationships and improve your mental health.",
+            "category": "relationships",
+            "imageUrl": "https://images.pexels.com/photos/7659454/pexels-photo-7659454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "articleLink": "https://www.mcleanhospital.org/essential/relationships"
+        },
+        {
+            "title": "Self-esteem: A study on the relationship between self-esteem and factors affecting student life",
+            "description": "This study examines the relationship between self-esteem and factors affecting student life.",
+            "category": "self-esteem",
+            "imageUrl": "https://images.pexels.com/photos/3781529/pexels-photo-3781529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "articleLink": "https://medcraveonline.com/JPNC/self-esteem-a-study-on-the-relationship-between-self-esteem-and-factors-affecting-student-life.html"
         }
-    ]
+
+    ]   
