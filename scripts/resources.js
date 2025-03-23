@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
       filterButtons.forEach((btn) => {
-        btn.classList.remove("btn-success", "text-white");
+        btn.classList.remove("btn-primary", "text-white");
       });
       const activeBtn = document.querySelector(`[data-category="${category}"]`);
       if (activeBtn) {
-        activeBtn.classList.add("btn-success", "text-white");
+        activeBtn.classList.add("btn-primary", "text-white");
       }
     }
   
@@ -38,12 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setCardVisibility(selectedCategory);
       });
     });
-  
+ // Get all posts
+   
+    
     // Load blog articles
-    fetch("resources.json")
-      .then((res) => res.json())
-      .then((data) => {
-        data.forEach((item) => {
+    db.collection("resources").get().then((querySnapshot)=>{
+      querySnapshot.forEach(doc => { item= doc.data()
           const colDiv = document.createElement("div");
           colDiv.className = "col-md-6 col-lg-4 article-card";
           colDiv.setAttribute("data-category", item.category.toLowerCase());
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="card-body">
                 <h5 class="article-title">${item.title}</h5>
                 <p class="article-text">${item.description}</p>
-                <a href="${item.articleLink}" target="_blank" class="read-more">Read More</a>
+                <a href="${item.articleLink}" target="_blank" class="read-more" style="color:blue">Read More</a>
               </div>
             </div>
           `;
@@ -81,10 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
     // Load videos
-    fetch("videos.json")
-      .then((res) => res.json())
-      .then((data) => {
-        data.forEach((video) => {
+    db.collection("videos").get().then((querySnapshot)=>{
+      querySnapshot.forEach(doc => { video= doc.data()
           const colDiv = document.createElement("div");
           colDiv.className = "col-md-6 col-lg-4 video-card";
           colDiv.setAttribute("data-category", video.category.toLowerCase());
