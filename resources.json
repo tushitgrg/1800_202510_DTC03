@@ -72,6 +72,28 @@
             "category": "relationships",
             "imageUrl": "https://images.pexels.com/photos/3692749/pexels-photo-3692749.jpeg?auto=compress&cs=tinysrgb&w=800",
             "articleLink": "https://www.betterhealth.vic.gov.au/health/healthyliving/Strong-relationships-strong-health"
-        }
+        },
+        {
+            "title": "Understanding How Low Self-Esteem May Impact Your Relationship",
+            "description": "FLow self-esteem can affect your perception of self-worth and willingness to trust in a relationship.",
+            "category": "relationships",
+            "imageUrl": "https://images.pexels.com/photos/804416/pexels-photo-804416.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "articleLink": "https://psychcentral.com/relationships/self-esteem-makes-successful-relationships?utm_source=chatgpt.com"
+          },
+          {
+            "title": "The effect of self-esteem on depressive symptoms among adolescents: Find hope",
+            "description": "This study examines the effect of self-esteem on depressive symptoms among adolescents.",
+            "category": "self-esteem",
+            "imageUrl": "https://images.pexels.com/photos/1134204/pexels-photo-1134204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "articleLink": "https://www.nature.com/articles/s41599-024-03249-1?utm_source=chatgpt.com"
+          },
+          {
+            "title": "How To Be More Confident and Improve Your Self-Esteem",
+            "description": "Learn how to be more confident and improve your self-esteem with these tips.",
+            "category": "self-esteem",
+            "imageUrl": "https://assets.clevelandclinic.org/transform/LargeFeatureImage/587e6607-3c20-42ee-84a7-796ecaa0aaef/low-self-esteem-1300080899",
+            "articleLink": "https://health.clevelandclinic.org/how-to-improve-self-esteem"
+          }
+        
 
     ]   
