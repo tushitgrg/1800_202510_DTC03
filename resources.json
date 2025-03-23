@@ -15,7 +15,7 @@
       "articleLink": "https://www.health.harvard.edu/mind-and-mood/what-causes-depression"
     },
     {
-        "title": "Understanding stress: How to manage and reduce stress",
+        "title": "Understanding stress:How to manage and reduce stress",
         "description": "Tips for managing stress include exercise, setting priorities, counseling, and more.",
         "category": "stress",
         "imageUrl": "https://images.pexels.com/photos/6214833/pexels-photo-6214833.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -65,6 +65,13 @@
             "category": "trauma",
             "imageUrl": "https://storage.googleapis.com/metime-cms-bucket/Screen_Shot_2024_06_28_at_4_02_45_PM_dc4bfdb5ee/Screen_Shot_2024_06_28_at_4_02_45_PM_dc4bfdb5ee.png",
             "articleLink": "https://www.metimehealing.com/mindfulness/blog/trauma-its-realities-and-long-term-impacts?gad_source=1&gbraid=0AAAAApd4hXHLKw9ey4KGchUnWd3VXbI2e&gclid=EAIaIQobChMI1JCfpr-ejAMVeQitBh0m2AzLEAAYAyAAEgKCV_D_BwE"
+        },
+        {
+            "title": "Strong relationships, strong health: Disover the benefits of social connections",
+            "description": "Proven links include lower rates of anxiety and depression, higher self-esteem, greater empathy, and more trusting and cooperative relationships.",
+            "category": "relationships",
+            "imageUrl": "https://images.pexels.com/photos/3692749/pexels-photo-3692749.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "articleLink": "https://www.betterhealth.vic.gov.au/health/healthyliving/Strong-relationships-strong-health"
         }
 
     ]   
