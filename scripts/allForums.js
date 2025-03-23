@@ -45,7 +45,7 @@ const date = new Date(milliseconds);
 
         const div = document.createElement('div');
         div.className = 'bg-white shadow-md rounded-lg p-4 border border-gray-300 hover:shadow-lg transition-all duration-200';
-        let avatar = `https://avatar.iran.liara.run/public/${Math.floor(Math.random()*10)}`
+        let avatar = `/images/pfp.jpg`
         if(item.user){
             if(item.user.avatar){
                 avatar = item.user.avatar

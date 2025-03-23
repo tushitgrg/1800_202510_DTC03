@@ -93,7 +93,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 const appendPost = (item) => {
 
     const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
-    let avatar = `https://avatar.iran.liara.run/public/${Math.floor(Math.random()*10)}`
+        let avatar = `/images/pfp.jpg`
     if(item.user){
         if(item.user.avatar){
             avatar = item.user.avatar
@@ -216,7 +216,7 @@ const appendReplies = (replies) => {
         let item = replies[i];
         const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
         const date = new Date(milliseconds);
-        let avatar = `https://avatar.iran.liara.run/public/${Math.floor(Math.random()*10)}`
+                let avatar = `/images/pfp.jpg`
         if(item.user){
             if(item.user.avatar){
                 avatar = item.user.avatar
