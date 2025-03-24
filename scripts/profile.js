@@ -115,9 +115,52 @@ function loadChartData() {
     { date: new Date("2025-03-20"), mentalScore: 65 },
     { date: new Date("2025-03-25"), mentalScore: 70 },
   ];
-
   renderChart(data, chartColor);
 }
+
+// function loadChartData() {
+//     const chartColor = "#4F46E5";
+    
+//     firebase.auth().onAuthStateChanged((user) => {
+//       if (user) {
+//         // Get all assessments for the current user, ordered by date
+//         db.collection("assessments")
+//           .where("user", "==", user.uid)
+//           .orderBy("last_updated", "asc")
+//           .get()
+//           .then((querySnapshot) => {
+//             const data = [];
+//             console.log("Hello")
+//             querySnapshot.forEach((doc) => {
+//               const assessment = doc.data();
+              
+//               // Check if the required data exists
+//               if (assessment.last_updated && assessment.ai && assessment.ai.dimensionScores && assessment.ai.dimensionScores.mental) {
+//                 data.push({
+//                   date: assessment.last_updated.toDate(), // Convert Firestore timestamp to Date
+//                   mentalScore: assessment.ai.dimensionScores.mental
+//                 });
+//               }
+//             });
+            
+//             if (data.length > 0) {
+//               renderChart(data, chartColor);
+//             } else {
+//               // Display message if no valid data found
+//               document.getElementById("mentalChart").innerHTML = 
+//                 '<text x="50%" y="50%" text-anchor="middle" font-size="16px">No mental health assessment data available</text>';
+//             }
+//           })
+//           .catch((error) => {
+//             console.error("Error getting assessments:", error);
+//             document.getElementById("mentalChart").innerHTML = 
+//               '<text x="50%" y="50%" text-anchor="middle" font-size="16px">Error loading assessment data</text>';
+//           });
+//       } else {
+//         console.log("No user is signed in");
+//       }
+//     });
+//   }
 
 function renderChart(data, chartColor) {
   const svg = d3.select("#mentalChart"),
