@@ -97,8 +97,13 @@ async function saveUserInfo() {
     method: "post",
     body: data,
   });
+
   resp = await resp.json();
-  imageurl = `https://images.webios.link/${resp.fileid}`;
+  imageurl = ""
+  if(resp.fileid){
+
+    imageurl = `https://images.webios.link/${resp.fileid}`;
+  }
   currentUser
     .update({
       name: userName,
