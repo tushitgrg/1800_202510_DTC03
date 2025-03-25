@@ -100,6 +100,7 @@ const appendPost = (item) => {
         }
        
     }
+    
     // Create a Date object
     const date = new Date(milliseconds);
 
@@ -132,7 +133,7 @@ const appendPost = (item) => {
                     </svg>
                      <span id=span${item.id}> ${item.likes} </span> &nbsp Likes
                 </button>
-                <button class="flex items-center text-gray-500 hover:text-indigo-600">
+                <button id="sharebtn" class="flex items-center text-gray-500 hover:text-indigo-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                     </svg>
@@ -142,6 +143,15 @@ const appendPost = (item) => {
             </div>
         </div>`
     document.getElementById('forumsection').innerHTML = html
+    const shareData = {
+        title: item.title,
+        text: item.content.slice(0,100),
+        url: window.location.href,
+      }
+    document.getElementById('sharebtn').addEventListener('click',async ()=>{
+        await navigator.share(shareData);
+
+    })
     firebase.auth().onAuthStateChanged(async (user) => {
         if (item.liked_by.includes(user.uid)) {
             document.getElementById(`svg${item.id}`).setAttribute('fill', "violet")
