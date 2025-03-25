@@ -24,10 +24,10 @@ function populateUserInfo() {
             document.getElementById("helloUser").textContent =
               "Hello " + (data.name || "User");
             document.getElementById("extraInfo").textContent =
-              (data.age || "N/A") + ", " + (data.pronouns || "N/A");
+              (data.age || "") + ", " + (data.pronouns || "");
             document.getElementById("avatarImg").setAttribute(
               "src",
-              data.avatar || "default-avatar.png"
+              data.avatar || "/images/pfp.jpg"
             );
 
             // Populate input fields
