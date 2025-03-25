@@ -1,21 +1,25 @@
-var currentUser; // Points to the document of the user who is logged in
+var currentUser;
+
+function getProfileUserId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id"); // Get 'id' from URL
+}
 
 function populateUserInfo() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      currentUser = db.collection("users").doc(user.uid);
-      currentUser
+      let profileUserId = getProfileUserId();
+      let userDocRef = profileUserId ? db.collection("users").doc(profileUserId) : db.collection("users").doc(user.uid);
+
+      userDocRef
         .get()
         .then((userDoc) => {
           if (userDoc.exists) {
             let data = userDoc.data();
-            // Populate input fields
             if (data.name) {
               document.getElementById("nameInput").value = data.name;
-              document.getElementById("usernameDisplay").textContent =
-                data.name;
-              document.getElementById("helloUser").textContent =
-                "Hello " + data.name;
+              document.getElementById("usernameDisplay").textContent = data.name;
+              document.getElementById("helloUser").textContent = "Hello " + data.name;
             }
             if (data.pronouns) {
               document.getElementById("pronounsInput").value = data.pronouns;
@@ -24,8 +28,7 @@ function populateUserInfo() {
               document.getElementById("ageInput").value = data.age;
             }
             if (data.age && data.pronouns) {
-              document.getElementById("extraInfo").textContent =
-                data.age + ", " + data.pronouns;
+              document.getElementById("extraInfo").textContent = data.age + ", " + data.pronouns;
             }
             if (data.email) {
               document.getElementById("emailInput").value = data.email;
@@ -34,9 +37,11 @@ function populateUserInfo() {
               document.getElementById("aboutMeInput").value = data.aboutMe;
             }
             if (data.avatar) {
-              document
-                .getElementById("avatarImg")
-                .setAttribute("src", data.avatar);
+              document.getElementById("avatarImg").setAttribute("src", data.avatar);
+            }
+            if (profileUserId && profileUserId !== user.uid) {
+              // If viewing another user's profile, disable editing
+              document.getElementById("editButton").style.display = "none";
             }
           }
         })
@@ -48,6 +53,7 @@ function populateUserInfo() {
 }
 
 populateUserInfo();
+
 
 function editUserInfo() {
   document.getElementById("nameInput").removeAttribute("disabled");
