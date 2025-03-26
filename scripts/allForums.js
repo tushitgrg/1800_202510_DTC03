@@ -3,13 +3,10 @@ const getPosts = async () => {
     
   
       try {
-        // Fetch all posts
         const querySnapshot = await db.collection("posts").get();
       
-        // Create an array of promises to fetch user data for each post
         const postPromises = querySnapshot.docs.map(async (doc) => {
           let post = doc.data();
-          // Fetch the user document associated with the post
           const userDoc = await db.collection("users").doc(post.userid).get();
           
           post.id = doc.id;
@@ -21,7 +18,6 @@ const getPosts = async () => {
          
           }
       
-          // Only include posts that are not replies
           return !post.is_reply ? post : null;
         });
       
@@ -40,7 +36,6 @@ const getPosts = async () => {
     data.forEach(item => {
         const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
 
-// Create a Date object
 const date = new Date(milliseconds);
 
         const div = document.createElement('div');
@@ -52,7 +47,6 @@ const date = new Date(milliseconds);
             }
            
         }
-        // Encode parameters to ensure special characters don't break the URL
         const postUrl = `eachpost.html?id=${item.id}`;
         let tagshtml = ""
         item.category.forEach((i)=>{
@@ -78,7 +72,7 @@ const date = new Date(milliseconds);
                         </div>
                         <p class="text-gray-600 mt-2 line-clamp-2">${item.content.slice(0,100)}..</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="md:flex hidden flex-wrap gap-2">
                    ${tagshtml}
                    </div>
                 </div>
