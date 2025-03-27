@@ -80,8 +80,8 @@ function editUserInfo() {
   document.getElementById("pronounsInput").removeAttribute("disabled");
   document.getElementById("aboutMeInput").removeAttribute("disabled");
   document.getElementById("saveChangesButton").classList.remove("hidden");
-  document.getElementById("avatarDiv").classList.remove("invisible");
-  document.getElementById("avatarDiv").classList.add("block");
+  document.getElementById("avatarInput").classList.remove("hidden");
+  document.getElementById("avatarInput").classList.add("block");
 }
 
 async function saveUserInfo() {
@@ -128,8 +128,8 @@ async function saveUserInfo() {
   document.getElementById("pronounsInput").setAttribute("disabled", "true");
   document.getElementById("aboutMeInput").setAttribute("disabled", "true");
   document.getElementById("saveChangesButton").classList.add("hidden");
-  document.getElementById("avatarDiv").classList.add("invisible");
-  document.getElementById("avatarDiv").classList.remove("block");
+  document.getElementById("avatarInput").classList.remove("block");
+  document.getElementById("avatarInput").classList.add("hidden");
 }
 
 function loadChartData() {
