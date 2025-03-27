@@ -49,6 +49,8 @@ function populateUserInfo() {
               document.getElementById("quizSection").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
               document.getElementById("helloUser").textContent = data.name || "User";
               document.getElementById("welcomeHeader").classList.add("hidden");
+              document.getElementById("chatButton").classList.remove("hidden");
+              document.getElementById("chatButton").setAttribute("href", "chat.html?id=" + profileId);
               // Disable input fields
               document
                 .querySelectorAll("input, textarea")
