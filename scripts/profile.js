@@ -101,19 +101,21 @@ async function saveUserInfo() {
   });
 
   resp = await resp.json();
-  imageurl = ""
+  imageurl = undefined
+ 
+  const updateData = {
+    name: userName,
+    pronouns: userPronouns,
+    age: userAge,
+    aboutMe: aboutMe,
+  };
   if(resp.fileid){
 
-    imageurl = `https://images.webios.link/${resp.fileid}`;
+    updateData.avatar = `https://images.webios.link/${resp.fileid}`;
   }
+
   currentUser
-    .update({
-      name: userName,
-      pronouns: userPronouns,
-      age: userAge,
-      aboutMe: aboutMe,
-      avatar: imageurl,
-    })
+    .update(updateData)
     .then(() => {
       document.getElementById("usernameDisplay").textContent = userName;
       document.getElementById("helloUser").textContent = "Hello " + userName;
@@ -121,7 +123,8 @@ async function saveUserInfo() {
         document.getElementById("extraInfo").textContent =
           userAge + ", " + userPronouns;
       }
-      document.getElementById("avatarImg").setAttribute("src", imageurl);
+      if(resp.fileid){
+      document.getElementById("avatarImg").setAttribute("src", imageurl);}
     })
     .catch((error) => console.error("Error updating document:", error));
 
