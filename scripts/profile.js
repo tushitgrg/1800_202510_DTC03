@@ -124,7 +124,7 @@ async function saveUserInfo() {
           userAge + ", " + userPronouns;
       }
       if(resp.fileid){
-      document.getElementById("avatarImg").setAttribute("src", imageurl);}
+      document.getElementById("avatarImg").setAttribute("src", updateData.avatar);}
     })
     .catch((error) => console.error("Error updating document:", error));
 
@@ -134,6 +134,7 @@ async function saveUserInfo() {
   document.getElementById("aboutMeInput").setAttribute("disabled", "true");
   document.getElementById("saveChangesButton").classList.add("hidden");
   document.getElementById("avatarInput").classList.remove("block");
+ document.getElementById("avatarInput").value = ''
   document.getElementById("avatarInput").classList.add("hidden");
 }
 
