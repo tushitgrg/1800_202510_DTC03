@@ -64,7 +64,7 @@ const date = new Date(milliseconds);
                     <div class="flex-1">
                         <h4 class="text-lg font-medium text-gray-800">${item.title}</h4>
                         <div class="flex items-center flex-wrap text-sm text-gray-500 mt-1">
-                            <span>Posted by <a href="/profile.html?id=${item.userid}"> &nbsp<span class="text-indigo-600 hover:underline">${item.username}</span> </a></span> 
+                            <span>Posted by <a href="/user/index.html?id=${item.userid}"> &nbsp<span class="text-indigo-600 hover:underline">${item.username}</span> </a></span> 
                             <span class="mx-2">•</span>
                             <span>${date.toDateString()}</span>
                             <span class="mx-2">•</span>

@@ -320,7 +320,7 @@
               ai: JSON.parse(text),
               last_updated: firebase.firestore.FieldValue.serverTimestamp(),
             });
-            window.location.href = `quizreport.html?id=${docref.id}`;
+            window.location.href = `/quiz/report.html?id=${docref.id}`;
           });
         }
       });

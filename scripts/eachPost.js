@@ -116,7 +116,7 @@ const appendPost = (item) => {
                 <img src="${avatar}" alt="User avatar" class="w-10 h-10 rounded-full mr-3">
                 <div>
 
-                <a href="/profile.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
+                <a href="/user/index.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
                     <div class="text-sm text-gray-500">Posted ${date.toDateString()}</div>
                 </div>
             </div>
@@ -241,7 +241,7 @@ const appendReplies = (replies) => {
             <div class="flex-1">
               <div class="flex items-center justify-between mb-2">
                 <div>
-                   <a href="/profile.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
+                   <a href="/user/index.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
                   <span class="text-sm text-gray-500 ml-2">${date.toDateString()}</span>
                 </div>
                 <button class="text-gray-400 hover:text-gray-600">
