@@ -10,6 +10,8 @@ function populateUserInfo() {
     if (user) {
       let profileId = getProfileIdFromURL();
       let isOwnProfile = !profileId || profileId === user.uid;
+      console.log(profileId)
+      console.log(isOwnProfile)
       let userDocRef = isOwnProfile
         ? db.collection("users").doc(user.uid)
         : db.collection("users").doc(profileId);
@@ -44,7 +46,7 @@ function populateUserInfo() {
                 .querySelectorAll("[onclick='editUserInfo()']")
                 .forEach((btn) => btn.classList.add("hidden"));
               document.getElementById("saveChangesButton").classList.add("hidden");
-              document.getElementById("chart").classList.add("lg:hidden");
+              // document.getElementById("chart").classList.add("lg:hidden");
               document.getElementById("logout").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
               document.getElementById("quizSection").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
               document.getElementById("helloUser").textContent = data.name || "User";
