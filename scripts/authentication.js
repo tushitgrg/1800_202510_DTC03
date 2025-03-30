@@ -31,7 +31,7 @@ document.getElementById("signInButton").addEventListener("click", async function
           console.warn("⚠️ No Firestore data found for user.");
       }
 
-      window.location.href = "/forums.html"; // Redirect after successful login
+      window.location.href = "/forum"; 
   } catch (error) {
       console.error("❌ Login Error:", error.message);
       errorMessage.innerText = error.message;
@@ -68,7 +68,7 @@ document.getElementById("signUpButton").addEventListener("click", async function
       });
 
       console.log("✅ User added to Firestore");
-      window.location.href = "/forums.html"; // Redirect after successful registration
+      window.location.href = "/forum"; // Redirect after successful registration
   } catch (error) {
       console.error("❌ Sign-up Error:", error.message);
       errorMessage.innerText = error.message;

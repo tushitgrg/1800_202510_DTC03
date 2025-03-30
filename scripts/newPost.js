@@ -16,7 +16,7 @@ const Createpost = async(e)=>{
             replies : [""],
             title: titleInput.value
         })
-       window.location.href= `eachpost.html?id=${docref.id}`
+       window.location.href= `/forum/post.html?id=${docref.id}`
     })
 }
 window.addEventListener('DOMContentLoaded',  () => {

@@ -86,6 +86,7 @@
                              
                              chatsListContainer.innerHTML += "<li>No Chats </p>"
                               
+                              
                            }
                                  
                         contacts.forEach(async contactId => {
@@ -108,7 +109,7 @@
                             `;
                            
                                                contactElement.querySelector('li').addEventListener('click', function() {
-                                window.location.href = `chat.html?id=${contactId}`;
+                                window.location.href = `/chat/open.html?id=${contactId}`;
                             });
 
                             chatsListContainer.appendChild(contactElement);

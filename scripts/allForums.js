@@ -47,7 +47,7 @@ const date = new Date(milliseconds);
             }
            
         }
-        const postUrl = `eachpost.html?id=${item.id}`;
+        const postUrl = `/forum/post.html?id=${item.id}`;
         let tagshtml = ""
         item.category.forEach((i)=>{
             tagshtml+= `
