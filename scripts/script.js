@@ -1,7 +1,0 @@
-function sayHello() {
-    
-}
-
-
-
-//sayHello();
