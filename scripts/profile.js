@@ -51,6 +51,12 @@ function populateUserInfo() {
               document.getElementById("quizSection").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
               document.getElementById("helloUser").textContent = data.name || "User";
               document.getElementById("welcomeHeader").classList.add("hidden");
+              document.getElementById('aboutMeInput').placeholder = 'Nothing here yet!';
+              document.getElementById('pronounsInput').placeholder = 'Nothing here yet!';
+              document.getElementById('ageInput').placeholder = 'Nothing here yet!';
+              document.getElementById('emailInput').placeholder = 'Nothing here yet!';
+              document.getElementById('emailInput').value = 'Private!';
+              document.getElementById('nameInput').placeholder = 'Nothing here yet!';
               document.getElementById("chatButton").classList.remove("hidden");
               document.getElementById("chatButton").setAttribute("href", "/chat/open.html?id=" + profileId);
               // Disable input fields
