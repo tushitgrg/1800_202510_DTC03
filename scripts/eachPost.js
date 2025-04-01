@@ -1,110 +1,109 @@
 const paramsString = window.location.search;
 const searchParams = new URLSearchParams(paramsString);
-const postid = searchParams.get('id')
+const postid = searchParams.get("id");
 
 const getPost = async (postid) => {
-    try {
-      // Retrieve the post document by its ID
-      const doc = await db.collection("posts").doc(postid).get();
-  
-      if (!doc.exists) {
-        console.warn(`Post with id ${postid} not found.`);
-        return undefined;
-      }
-  
-      // Get the post data and assign the post ID
-      const data = doc.data();
-      data.id = postid;
-  
-      // Retrieve the user document for the post's author
-      const userDoc = await db.collection("users").doc(data.userid).get();
-      data.user = userDoc.exists ? userDoc.data() : null;
-      if(userDoc.data()){
-        if(userDoc.data().name){
-            data.username = userDoc.data().name
-        }
-     
-      }
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching post:", error);
-      throw error;
+  try {
+    // Retrieve the post document by its ID
+    const doc = await db.collection("posts").doc(postid).get();
+
+    if (!doc.exists) {
+      console.warn(`Post with id ${postid} not found.`);
+      return undefined;
     }
-  };
-  
+
+    // Get the post data and assign the post ID
+    const data = doc.data();
+    data.id = postid;
+
+    // Retrieve the user document for the post's author
+    const userDoc = await db.collection("users").doc(data.userid).get();
+    data.user = userDoc.exists ? userDoc.data() : null;
+    if (userDoc.data()) {
+      if (userDoc.data().name) {
+        data.username = userDoc.data().name;
+      }
+    }
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    throw error;
+  }
+};
 
 const like = async (item1) => {
-    if (document.getElementById(`svg${item1.id}`).getAttribute('fill') != "none") {
-        document.getElementById(`svg${item1.id}`).setAttribute('fill', "none")
-        document.getElementById(`span${item1.id}`).innerText = parseInt(document.getElementById(`span${item1.id}`).innerText) - 1
+  if (
+    document.getElementById(`svg${item1.id}`).getAttribute("fill") != "none"
+  ) {
+    document.getElementById(`svg${item1.id}`).setAttribute("fill", "none");
+    document.getElementById(`span${item1.id}`).innerText =
+      parseInt(document.getElementById(`span${item1.id}`).innerText) - 1;
+  } else {
+    document.getElementById(`svg${item1.id}`).setAttribute("fill", "violet");
+    document.getElementById(`span${item1.id}`).innerText =
+      parseInt(document.getElementById(`span${item1.id}`).innerText) + 1;
+  }
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) return;
+    const item = await getPost(item1.id);
+    const liked_by = item.liked_by;
 
+    if (liked_by.includes(user.uid)) {
+      liked_by.splice(liked_by.indexOf(user.uid), 1);
+      await db
+        .collection("posts")
+        .doc(item.id)
+        .update({
+          likes: item.likes - 1,
+          liked_by: liked_by,
+        });
     } else {
-        document.getElementById(`svg${item1.id}`).setAttribute('fill', "violet")
-        document.getElementById(`span${item1.id}`).innerText = parseInt(document.getElementById(`span${item1.id}`).innerText) + 1
+      liked_by.push(user.uid);
+      await db
+        .collection("posts")
+        .doc(item.id)
+        .update({
+          likes: item.likes + 1,
+          liked_by: liked_by,
+        });
     }
-    firebase.auth().onAuthStateChanged(async (user) => {
-        if (!user) return
-        const item = await getPost(item1.id)
-        const liked_by = item.liked_by
-
-        if (liked_by.includes(user.uid)) {
-            liked_by.splice(liked_by.indexOf(user.uid), 1)
-            await db.collection("posts").doc(item.id).update({
-                likes: item.likes - 1,
-                liked_by: liked_by
-
-            })
-
-        } else {
-            liked_by.push(user.uid)
-            await db.collection("posts").doc(item.id).update({
-                likes: item.likes + 1,
-                liked_by: liked_by
-
-            })
-        }
-
-
-    })
-
-}
-const loadEverything = async()=>{
-    try {
-       
-        const post = await getPost(postid);
-        if (post) {
-            appendPost(post);
-            const replies = await getallReplies(post);
-            if (replies) {
-                appendReplies(replies)
-            }
-        } else {
-            console.log('Posts not found or undefined');
-        }
-    } catch (e) {
-        console.log(e.message);
+  });
+};
+const loadEverything = async () => {
+  try {
+    const post = await getPost(postid);
+    if (post) {
+      appendPost(post);
+      const replies = await getallReplies(post);
+      if (replies) {
+        appendReplies(replies);
+      }
+    } else {
+      console.log("Posts not found or undefined");
     }
-}
-window.addEventListener('DOMContentLoaded', async () => {
- await loadEverything()
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+window.addEventListener("DOMContentLoaded", async () => {
+  await loadEverything();
 });
 
 const appendPost = (item) => {
-
-    const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
-        let avatar = `/images/pfp.jpg`
-    if(item.user){
-        if(item.user.avatar){
-            avatar = item.user.avatar
-        }
-       
+  const milliseconds =
+    item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
+  let avatar = `/images/pfp.jpg`;
+  if (item.user) {
+    if (item.user.avatar) {
+      avatar = item.user.avatar;
     }
-    
-    // Create a Date object
-    const date = new Date(milliseconds);
+  }
 
-    const html = ` <div class="p-6">
+  // Create a Date object
+  const date = new Date(milliseconds);
+
+  const html = ` <div class="p-6">
             <div class="flex justify-between items-start mb-4">
                 <h2 class="text-2xl font-bold text-gray-800">${item.title}</h2>
                 <div class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
@@ -141,29 +140,26 @@ const appendPost = (item) => {
                 </button>
               
             </div>
-        </div>`
-    document.getElementById('forumsection').innerHTML = html
-    const shareData = {
-        title: item.title,
-        text: item.content.slice(0,100),
-        url: window.location.href,
-      }
-    document.getElementById('sharebtn').addEventListener('click',async ()=>{
-        await navigator.share(shareData);
+        </div>`;
+  document.getElementById("forumsection").innerHTML = html;
+  const shareData = {
+    title: item.title,
+    text: item.content.slice(0, 100),
+    url: window.location.href,
+  };
+  document.getElementById("sharebtn").addEventListener("click", async () => {
+    await navigator.share(shareData);
+  });
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (item.liked_by.includes(user.uid)) {
+      document.getElementById(`svg${item.id}`).setAttribute("fill", "violet");
+    }
+  });
 
-    })
-    firebase.auth().onAuthStateChanged(async (user) => {
-        if (item.liked_by.includes(user.uid)) {
-            document.getElementById(`svg${item.id}`).setAttribute('fill', "violet")
-        }
-    })
-
-    document.getElementById(`btn${item.id}`).addEventListener('click', () => {
-
-        like(item)
-
-    })
-}
+  document.getElementById(`btn${item.id}`).addEventListener("click", () => {
+    like(item);
+  });
+};
 
 // async function getallReplies(item) {
 //     let replies = []
@@ -175,7 +171,6 @@ const appendPost = (item) => {
 //             dt.id = itemReplies[i]
 //             replies.push(dt)
 
-
 //         })
 //     }
 //     console.log(replies)
@@ -184,57 +179,59 @@ const appendPost = (item) => {
 // }
 
 async function getallReplies(item) {
-    try {
-      // Ensure the replies array exists and filter out any falsy values
-      const replyIds = Array.isArray(item.replies) ? item.replies.filter(Boolean) : [];
-      
-      // Map each reply ID to a promise that fetches the reply and its associated user data
-      const replyPromises = replyIds.map(async (replyId) => {
-        const doc = await db.collection("posts").doc(replyId).get();
-        if (doc.exists) {
-          const data = doc.data();
-          data.id = replyId;
-          // Fetch the user data for the reply's author
-          const userDoc = await db.collection("users").doc(data.userid).get();
-          data.user = userDoc.exists ? userDoc.data() : null;
-          if(userDoc.data()){
-            if(userDoc.data().name){
-                data.username = userDoc.data().name
-            }
-         
+  try {
+    // Ensure the replies array exists and filter out any falsy values
+    const replyIds = Array.isArray(item.replies)
+      ? item.replies.filter(Boolean)
+      : [];
+
+    // Map each reply ID to a promise that fetches the reply and its associated user data
+    const replyPromises = replyIds.map(async (replyId) => {
+      const doc = await db.collection("posts").doc(replyId).get();
+      if (doc.exists) {
+        const data = doc.data();
+        data.id = replyId;
+        // Fetch the user data for the reply's author
+        const userDoc = await db.collection("users").doc(data.userid).get();
+        data.user = userDoc.exists ? userDoc.data() : null;
+        if (userDoc.data()) {
+          if (userDoc.data().name) {
+            data.username = userDoc.data().name;
           }
-          return data;
         }
-        return null; // Return null for non-existent replies
-      });
-      
-      // Wait for all reply promises to resolve
-      const replies = await Promise.all(replyPromises);
-      // Filter out any null responses (replies that didn't exist)
-      const validReplies = replies.filter(reply => reply !== null);
-      
-      console.log(validReplies);
-      return validReplies;
-    } catch (error) {
-      console.error("Error fetching replies:", error);
-      throw error;
-    }
+        return data;
+      }
+      return null; // Return null for non-existent replies
+    });
+
+    // Wait for all reply promises to resolve
+    const replies = await Promise.all(replyPromises);
+    // Filter out any null responses (replies that didn't exist)
+    const validReplies = replies.filter((reply) => reply !== null);
+
+    console.log(validReplies);
+    return validReplies;
+  } catch (error) {
+    console.error("Error fetching replies:", error);
+    throw error;
   }
-  
+}
+
 const appendReplies = (replies) => {
-    let html = `<div class="space-y-6" id="allreplies">`;
-    for (let i = 0; i < replies.length; i++) {
-        let item = replies[i];
-        const milliseconds = item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
-        const date = new Date(milliseconds);
-                let avatar = `/images/pfp.jpg`
-        if(item.user){
-            if(item.user.avatar){
-                avatar = item.user.avatar
-            }
-           
-        }
-        html += `
+  let html = `<div class="space-y-6" id="allreplies">`;
+  for (let i = 0; i < replies.length; i++) {
+    let item = replies[i];
+    const milliseconds =
+      item.postedAt.seconds * 1000 +
+      Math.floor(item.postedAt.nanoseconds / 1e6);
+    const date = new Date(milliseconds);
+    let avatar = `/images/pfp.jpg`;
+    if (item.user) {
+      if (item.user.avatar) {
+        avatar = item.user.avatar;
+      }
+    }
+    html += `
         <div class="bg-white rounded-lg shadow-md p-6">
           <div class="flex items-start">
             <img src="${avatar}" alt="User avatar" class="w-10 h-10 rounded-full mr-4">
@@ -265,66 +262,60 @@ const appendReplies = (replies) => {
             </div>
           </div>
         </div>`;
-    }
-    html += `</div>`;
-    document.getElementById('repliessection').innerHTML = html;
+  }
+  html += `</div>`;
+  document.getElementById("repliessection").innerHTML = html;
 
-    replies.forEach(item => {
-        firebase.auth().onAuthStateChanged(async (user) => {
-            if (item.liked_by.includes(user.uid)) {
-                document.getElementById(`svg${item.id}`).setAttribute('fill', "violet");
-            }
-        });
-        document.getElementById(`btn${item.id}`).addEventListener('click', () => {
-
-            like(item);
-        });
+  replies.forEach((item) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (item.liked_by.includes(user.uid)) {
+        document.getElementById(`svg${item.id}`).setAttribute("fill", "violet");
+      }
     });
+    document.getElementById(`btn${item.id}`).addEventListener("click", () => {
+      like(item);
+    });
+  });
 };
 
-
 const addFakeReplies = async () => {
-    let postref = db.collection("posts");
+  let postref = db.collection("posts");
 
-    for (let i = 0; i < 6; i++) {
-        postref.add({
-            category: "Tag",
-            content: `Reply ${i}`,
-            is_reply: true,
-            username: `user ${i}`,
-            postedAt: firebase.firestore.FieldValue.serverTimestamp()  
-        });
+  for (let i = 0; i < 6; i++) {
+    postref.add({
+      category: "Tag",
+      content: `Reply ${i}`,
+      is_reply: true,
+      username: `user ${i}`,
+      postedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+};
+document.getElementById("addReplyBtn").addEventListener("click", async (e) => {
+  e.preventDefault();
+  firebase.auth().onAuthStateChanged(async (user) => {
+    console.log(user);
+    let val = document.getElementById("comment").value;
+    if (val) {
+      const docref = await db.collection("posts").add({
+        category: "reply",
+        content: val,
+        is_reply: true,
+        username: user.displayName,
+        postedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0,
+        liked_by: [],
+        userid: user.uid,
+      });
+
+      const post = await getPost(postid);
+      const replies = post.replies;
+      replies.push(docref.id);
+      db.collection("posts").doc(postid).update({
+        replies: replies,
+      });
+      document.getElementById("comment").value = "";
+      await loadEverything();
     }
-
-}
-document.getElementById('addReplyBtn').addEventListener('click',async(e)=>{
-    e.preventDefault()
-    firebase.auth().onAuthStateChanged(async (user) => {
-    console.log(user)
-        let val =document.getElementById("comment").value
-        if(val){
-           const docref =await  db.collection("posts").add({
-                category: "reply",
-                content: val,
-                is_reply: true,
-                username: user.displayName,
-                postedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                likes:0,
-                liked_by:[],
-                userid: user.uid
-            })
-          
-            const post = await getPost(postid)
-            const replies = post.replies
-            replies.push(docref.id)
-            db.collection("posts").doc(postid).update({
-               replies: replies
-            })
-            document.getElementById("comment").value =""
-            await loadEverything()
-        }
-    })
- 
-   
-
-} )
+  });
+});

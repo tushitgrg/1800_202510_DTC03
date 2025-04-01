@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Well Circle - Mental Health Community</title>
@@ -10,176 +9,200 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <style>
-        a {
-            text-decoration: none;
-            color: black;
-        }
+      a {
+        text-decoration: none;
+        color: black;
+      }
     </style>
+  </head>
 
-
-</head>
-
-<body class="bg-gray-50">
-    <div id="header">
-    </div>
+  <body class="bg-gray-50">
+    <div id="header"></div>
 
     <!-- Header For Mobile  -->
 
-
     <main class="bg-gray-100 h-screen flex mt-16 flex-col">
-
-
-
-        <main class="flex-1 flex flex-col container mx-auto p-4 overflow-hidden">
-
-            <div class="flex-1 bg-white rounded-lg shadow-md flex flex-col overflow-hidden" id="chatDiv">
-
-                <div class="p-4 border-b flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                        <img src="images/pfp.jpg" class="rounded-full w-10 h-10 object-fill" alt="" id="avatarImg">
-                        <!-- <span class="text-sm font-medium text-gray-600">TG</span> -->
-                    </div>
-                    <div>
-                        <h2 class="font-medium" id="receiverName"></h2>
-                      
-                    </div>
-                </div>
-
-                <div class="flex-1 p-4 overflow-y-auto space-y-4" id="messages">
-
-
-                </div>
-
-
-                <div class="p-4 border-t">
-                    <div class="flex space-x-2">
-                        <input type="text" id="message-input" placeholder="Type a message..."
-                            class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <button id="send-button"
-                            class="bg-blue-500 text-white p-3 w-12 h-12 flex items-center justify-center hover:bg-blue-700 transition duration-200"
-                            style="border-radius: 9999px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
-                            </svg>
-                        </button>
-                        
-                    </div>
-                </div>
+      <main class="flex-1 flex flex-col container mx-auto p-4 overflow-hidden">
+        <div
+          class="flex-1 bg-white rounded-lg shadow-md flex flex-col overflow-hidden"
+          id="chatDiv"
+        >
+          <div class="p-4 border-b flex items-center space-x-3">
+            <div
+              class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center"
+            >
+              <img
+                src="images/pfp.jpg"
+                class="rounded-full w-10 h-10 object-fill"
+                alt=""
+                id="avatarImg"
+              />
+              <!-- <span class="text-sm font-medium text-gray-600">TG</span> -->
             </div>
-        </main>
+            <div>
+              <h2 class="font-medium" id="receiverName"></h2>
+            </div>
+          </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', async function () {
-                const messageInput = document.getElementById('message-input');
-                const sendButton = document.getElementById('send-button');
-                const messagesContainer = document.getElementById('messages');
-                const paramsString = window.location.search;
-const searchParams = new URLSearchParams(paramsString);
-const userid = searchParams.get('id')
-const ReceiverUser = await db.collection("users").doc(userid).get()
-const Receiver = ReceiverUser.data()
-receiverName.innerText = Receiver.name
+          <div class="flex-1 p-4 overflow-y-auto space-y-4" id="messages"></div>
 
-                        if(Receiver.avatar){
-                            avatarImg.setAttribute('src',  Receiver.avatar)
-                        }
-               async function sendMessage() {
-                firebase.auth().onAuthStateChanged(async (user) => {
-                    if (user) {
-                    const message = messageInput.value.trim();
-                    if (message) {
-                         docref =await  db.collection("chat").add({
-                            sender: user.uid,
-                            receiver: userid,
-                            content: message,
-                            timestamp : firebase.firestore.FieldValue.serverTimestamp()
-                         })
-                         
-                        messageInput.value = '';
+          <div class="p-4 border-t">
+            <div class="flex space-x-2">
+              <input
+                type="text"
+                id="message-input"
+                placeholder="Type a message..."
+                class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+              <button
+                id="send-button"
+                class="bg-blue-500 text-white p-3 w-12 h-12 flex items-center justify-center hover:bg-blue-700 transition duration-200"
+                style="border-radius: 9999px"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-send"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </main>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const messageInput = document.getElementById("message-input");
+        const sendButton = document.getElementById("send-button");
+        const messagesContainer = document.getElementById("messages");
+        const paramsString = window.location.search;
+        const searchParams = new URLSearchParams(paramsString);
+        const userid = searchParams.get("id");
+        const ReceiverUser = await db.collection("users").doc(userid).get();
+        const Receiver = ReceiverUser.data();
+        receiverName.innerText = Receiver.name;
 
-                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        if (Receiver.avatar) {
+          avatarImg.setAttribute("src", Receiver.avatar);
+        }
+        async function sendMessage() {
+          firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+              const message = messageInput.value.trim();
+              if (message) {
+                docref = await db.collection("chat").add({
+                  sender: user.uid,
+                  receiver: userid,
+                  content: message,
+                  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                });
 
-                    }
-                }
-            })
+                messageInput.value = "";
+
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+              }
+            }
+          });
         }
 
-                let senderMessages = []
-                let receiverMessages = []
-                function getAllMessages() {
-                    firebase.auth().onAuthStateChanged(async (user) => {
-                        if (user) {
-                            db.collection("chat")
-                                .where("sender", "==", user.uid)
-                                .where("receiver", "==", userid)
-                                .onSnapshot((querySnapshot) => {
-                                    senderMessages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                                    renderAllMessages()
-                                }, (error) => {
-                                    console.error("Error fetching real-time data:", error);
-                                });
-
-                                db.collection("chat")
-                                .where("receiver", "==", user.uid)
-                                .where("sender", "==", userid)
-                                .onSnapshot((querySnapshot) => {
-                                    receiverMessages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                                    renderAllMessages()
-                                }, (error) => {
-                                    console.error("Error fetching real-time data:", error);
-                                });
-                                
-                        }
-                    })
-                }
-
-
-
-                getAllMessages()
-                function formatTimestamp(timestamp) {
-
-        const date = new Date(timestamp.seconds * 1000);
-
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function renderAllMessages() {
-        messagesContainer.innerHTML = "";
-
-        firebase.auth().onAuthStateChanged((user) => {
+        let senderMessages = [];
+        let receiverMessages = [];
+        function getAllMessages() {
+          firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
+              db.collection("chat")
+                .where("sender", "==", user.uid)
+                .where("receiver", "==", userid)
+                .onSnapshot(
+                  (querySnapshot) => {
+                    senderMessages = querySnapshot.docs.map((doc) => ({
+                      id: doc.id,
+                      ...doc.data(),
+                    }));
+                    renderAllMessages();
+                  },
+                  (error) => {
+                    console.error("Error fetching real-time data:", error);
+                  },
+                );
 
-                const allMessages = senderMessages.concat(receiverMessages);
-             
-                allMessages.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
-          
-                allMessages.forEach(message => {
-                    const messageElement = document.createElement('div');
-         
-                    if (message.sender === user.uid) {
-        
-                        messageElement.className = 'flex items-end justify-end space-x-2';
-                        messageElement.innerHTML = `
+              db.collection("chat")
+                .where("receiver", "==", user.uid)
+                .where("sender", "==", userid)
+                .onSnapshot(
+                  (querySnapshot) => {
+                    receiverMessages = querySnapshot.docs.map((doc) => ({
+                      id: doc.id,
+                      ...doc.data(),
+                    }));
+                    renderAllMessages();
+                  },
+                  (error) => {
+                    console.error("Error fetching real-time data:", error);
+                  },
+                );
+            }
+          });
+        }
+
+        getAllMessages();
+        function formatTimestamp(timestamp) {
+          const date = new Date(timestamp.seconds * 1000);
+
+          return date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        }
+
+        function renderAllMessages() {
+          messagesContainer.innerHTML = "";
+
+          firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              const allMessages = senderMessages.concat(receiverMessages);
+
+              allMessages.sort(
+                (a, b) => a.timestamp.seconds - b.timestamp.seconds,
+              );
+
+              allMessages.forEach((message) => {
+                const messageElement = document.createElement("div");
+
+                if (message.sender === user.uid) {
+                  messageElement.className =
+                    "flex items-end justify-end space-x-2";
+                  messageElement.innerHTML = `
                             <div class="max-w-[75%] bg-primary text-white rounded-t-lg rounded-l-lg p-3">
                                 <p>${message.content}</p>
                                 <span class="text-xs text-white/70 mt-1 block">${formatTimestamp(message.timestamp)}</span>
                             </div>
                         `;
-                    } else {
-                        avatarurl = '/images/pfp.jpg'
-                        if(Receiver.avatar){
-                            avatarurl = Receiver.avatar
-                        }
-                        messageElement.className = 'flex items-end space-x-2';
-                        messageElement.innerHTML = `
+                } else {
+                  avatarurl = "/images/pfp.jpg";
+                  if (Receiver.avatar) {
+                    avatarurl = Receiver.avatar;
+                  }
+                  messageElement.className = "flex items-end space-x-2";
+                  messageElement.innerHTML = `
                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                               <img src="${avatarurl}" class="rounded-full" alt="" id="avatarImg">
                             </div>
@@ -188,33 +211,33 @@ receiverName.innerText = Receiver.name
                                 <span class="text-xs text-white mt-1 block">${formatTimestamp(message.timestamp)}</span>
                             </div>
                         `;
-                    }
-                    messagesContainer.appendChild(messageElement);
-                });
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+                messagesContainer.appendChild(messageElement);
+              });
+              messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
+          });
+        }
+
+        sendButton.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
         });
-    }
-              
-    sendButton.addEventListener('click', sendMessage);
-                messageInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                    
-                         sendMessage();
-                    }
-                });
-            });
-        </script>
-</body>
-<!-- Footer -->
+      });
+    </script>
 
-<div id="footer"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-<script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
-<script src="/scripts/renderer.js"></script>
-<script src="/scripts/ProtectedRoute.js"></script>
-</body>
+    <!-- Footer -->
 
+    <div id="footer"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/scripts/firebaseAPI_TEAMDTC03.js"></script>
+    <script src="/scripts/renderer.js"></script>
+    <script src="/scripts/ProtectedRoute.js"></script>
+  </body>
 </html>

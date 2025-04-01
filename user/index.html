@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
     />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" href="/assets/icon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icon.ico" type="image/x-icon" />
     <style>
       a {
         text-decoration: none;
@@ -38,7 +38,7 @@
     >
       <div class="bg-black bg-opacity-50 p-8 rounded-lg">
         <h1 class="text-4xl font-bold" id="helloUser"></h1>
-        <p id="welcomeHeader"class="mt-2">
+        <p id="welcomeHeader" class="mt-2">
           This is your profile page. You can edit your information, take a quiz,
           and see your progress.
         </p>
@@ -56,29 +56,33 @@
       <!-- Profile Card -->
       <div class="w-full md:w-1/3 p-4">
         <div class="bg-white shadow-md rounded-lg">
-          <div class="flex flex-col items-center justify-center" >
+          <div class="flex flex-col items-center justify-center">
             <img
-              class="w-24 h-24 rounded-full border-4 border-white" id="avatarImg"
+              class="w-24 h-24 rounded-full border-4 border-white"
+              id="avatarImg"
               src="/images/pfp.jpg"
             />
             <label class="" id="avatarDiv">
               <span class="sr-only">Choose profile photo</span>
-              <input type="file" id="avatarInput" accept="image/*" class="hidden w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-violet-50 file:text-violet-700
-                hover:file:bg-violet-100
-              "/>
+              <input
+                type="file"
+                id="avatarInput"
+                accept="image/*"
+                class="hidden w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+              />
             </label>
           </div>
           <div class="text-center pb-8">
             <h3 id="usernameDisplay" class="text-xl font-bold">Username</h3>
             <p class="text-gray-600" id="extraInfo"></p>
-            <a href="" id="chatButton" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Send a message</a>
+            <a
+              href=""
+              id="chatButton"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden"
+              >Send a message</a
+            >
           </div>
         </div>
-
       </div>
 
       <!-- Account Info -->
@@ -148,11 +152,11 @@
             </fieldset>
           </form>
           <button
-          class="mt-4 px-6 py-2 bg-indigo-600 rounded text-white md:hidden"
-          onclick="editUserInfo()"
-        >
-          Edit Profile
-        </button>
+            class="mt-4 px-6 py-2 bg-indigo-600 rounded text-white md:hidden"
+            onclick="editUserInfo()"
+          >
+            Edit Profile
+          </button>
           <button
             id="saveChangesButton"
             class="mt-4 px-6 py-2 bg-indigo-600 rounded text-white hidden"
@@ -162,42 +166,43 @@
           </button>
         </div>
       </div>
-                    <!-- Quiz Section -->
-      <div id="quizSection"
-      class="w-full p-4 flex flex-col justify-center items-center bg-white shadow-md rounded-lg mt-8"
-    >
-      <h3 class="text-xl font-bold text-gray-800 text-center">
-        Improve Your Mental Wellness
-      </h3>
-      <p class="text-gray-600 text-center mt-2 px-4">
-        Take our mental health quiz to gain insights into your well-being and
-        get personalized tips!
-      </p>
-      <a
-        href="/quiz"
-        class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300 inline-block text-center"
+      <!-- Quiz Section -->
+      <div
+        id="quizSection"
+        class="w-full p-4 flex flex-col justify-center items-center bg-white shadow-md rounded-lg mt-8"
       >
-        Take Quiz
-      </a>
+        <h3 class="text-xl font-bold text-gray-800 text-center">
+          Improve Your Mental Wellness
+        </h3>
+        <p class="text-gray-600 text-center mt-2 px-4">
+          Take our mental health quiz to gain insights into your well-being and
+          get personalized tips!
+        </p>
+        <a
+          href="/quiz"
+          class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300 inline-block text-center"
+        >
+          Take Quiz
+        </a>
+      </div>
     </div>
-    </div>
-    
-    <body class="flex justify-center items-center min-h-screen bg-gray-100">
+
+    <div class="flex justify-center items-center bg-gray-100">
       <!-- <div  id="chart" class="w-full pt-4 pb-4 pl-45 pr-30 bg-white shadow-md rounded-lg  mb-4 hidden sm:hidden md:hidden lg:flex flex-column">
           <h2 class="text-xl font-semibold text-center">Mental Progress Over Time</h2>
           <svg id="mentalChart" class="w-full h-96"></svg>
       </div> -->
-    <div id="logout" class="flex w-full mt-2 mb-2 items-center justify-center py-10">
-      <a
-        href="/user/logout.html"
-        class="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300 inline-block text-center"
+      <div
+        id="logout"
+        class="flex w-full mt-2 mb-2 items-center justify-center py-10"
       >
-        Logout
-      </a>
-    </div>
-    
-
-
+        <a
+          href="/user/logout.html"
+          class="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300 inline-block text-center"
+        >
+          Logout
+        </a>
+      </div>
     </div>
 
     <!-- Footer -->

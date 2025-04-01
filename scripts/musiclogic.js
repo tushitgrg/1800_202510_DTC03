@@ -44,7 +44,12 @@ function likeTrack(title, genre, storagePath) {
   db.collection("users")
     .doc(user.uid)
     .collection("likedTracks")
-    .add({ title, genre, storagePath, likedAt: firebase.firestore.Timestamp.now() })
+    .add({
+      title,
+      genre,
+      storagePath,
+      likedAt: firebase.firestore.Timestamp.now(),
+    })
     .then(() => console.log("✅ Track liked."))
     .catch((err) => console.error("❌ Like failed:", err));
 }
@@ -61,7 +66,12 @@ function addToPlaylist(title, genre, storagePath) {
     .collection("playlists")
     .doc(playlistName)
     .collection("tracks")
-    .add({ title, genre, storagePath, addedAt: firebase.firestore.Timestamp.now() })
+    .add({
+      title,
+      genre,
+      storagePath,
+      addedAt: firebase.firestore.Timestamp.now(),
+    })
     .then(() => console.log("✅ Track added to playlist."))
     .catch((err) => console.error("❌ Playlist add failed:", err));
 }

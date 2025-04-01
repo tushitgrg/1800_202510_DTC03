@@ -10,8 +10,8 @@ function populateUserInfo() {
     if (user) {
       let profileId = getProfileIdFromURL();
       let isOwnProfile = !profileId || profileId === user.uid;
-      console.log(profileId)
-      console.log(isOwnProfile)
+      console.log(profileId);
+      console.log(isOwnProfile);
       let userDocRef = isOwnProfile
         ? db.collection("users").doc(user.uid)
         : db.collection("users").doc(profileId);
@@ -27,10 +27,9 @@ function populateUserInfo() {
               "Hello " + (data.name || "User");
             document.getElementById("extraInfo").textContent =
               (data.age || "") + ", " + (data.pronouns || "");
-            document.getElementById("avatarImg").setAttribute(
-              "src",
-              data.avatar || "/images/pfp.jpg"
-            );
+            document
+              .getElementById("avatarImg")
+              .setAttribute("src", data.avatar || "/images/pfp.jpg");
 
             // Populate input fields
             document.getElementById("nameInput").value = data.name || "";
@@ -45,20 +44,34 @@ function populateUserInfo() {
               document
                 .querySelectorAll("[onclick='editUserInfo()']")
                 .forEach((btn) => btn.classList.add("hidden"));
-              document.getElementById("saveChangesButton").classList.add("hidden");
+              document
+                .getElementById("saveChangesButton")
+                .classList.add("hidden");
               // document.getElementById("chart").classList.add("lg:hidden");
-              document.getElementById("logout").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
-              document.getElementById("quizSection").classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
-              document.getElementById("helloUser").textContent = data.name || "User";
+              document
+                .getElementById("logout")
+                .classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
+              document
+                .getElementById("quizSection")
+                .classList.add("hidden", "sm:hidden", "md:hidden", "lg:hidden");
+              document.getElementById("helloUser").textContent =
+                data.name || "User";
               document.getElementById("welcomeHeader").classList.add("hidden");
-              document.getElementById('aboutMeInput').placeholder = 'Nothing here yet!';
-              document.getElementById('pronounsInput').placeholder = 'Nothing here yet!';
-              document.getElementById('ageInput').placeholder = 'Nothing here yet!';
-              document.getElementById('emailInput').placeholder = 'Nothing here yet!';
-              document.getElementById('emailInput').value = 'Private!';
-              document.getElementById('nameInput').placeholder = 'Nothing here yet!';
+              document.getElementById("aboutMeInput").placeholder =
+                "Nothing here yet!";
+              document.getElementById("pronounsInput").placeholder =
+                "Nothing here yet!";
+              document.getElementById("ageInput").placeholder =
+                "Nothing here yet!";
+              document.getElementById("emailInput").placeholder =
+                "Nothing here yet!";
+              document.getElementById("emailInput").value = "Private!";
+              document.getElementById("nameInput").placeholder =
+                "Nothing here yet!";
               document.getElementById("chatButton").classList.remove("hidden");
-              document.getElementById("chatButton").setAttribute("href", "/chat/open.html?id=" + profileId);
+              document
+                .getElementById("chatButton")
+                .setAttribute("href", "/chat/open.html?id=" + profileId);
               // Disable input fields
               document
                 .querySelectorAll("input, textarea")
@@ -66,10 +79,11 @@ function populateUserInfo() {
 
               // Hide avatar upload option
               document.getElementById("avatarDiv").classList.add("invisible");
-
             } else {
               currentUser = userDocRef;
-              document.getElementById("avatarDiv").classList.remove("invisible");
+              document
+                .getElementById("avatarDiv")
+                .classList.remove("invisible");
             }
           } else {
             console.log("User profile not found.");
@@ -109,16 +123,15 @@ async function saveUserInfo() {
   });
 
   resp = await resp.json();
-  imageurl = undefined
- 
+  imageurl = undefined;
+
   const updateData = {
     name: userName,
     pronouns: userPronouns,
     age: userAge,
     aboutMe: aboutMe,
   };
-  if(resp.fileid){
-
+  if (resp.fileid) {
     updateData.avatar = `https://images.webios.link/${resp.fileid}`;
   }
 
@@ -131,8 +144,11 @@ async function saveUserInfo() {
         document.getElementById("extraInfo").textContent =
           userAge + ", " + userPronouns;
       }
-      if(resp.fileid){
-      document.getElementById("avatarImg").setAttribute("src", updateData.avatar);}
+      if (resp.fileid) {
+        document
+          .getElementById("avatarImg")
+          .setAttribute("src", updateData.avatar);
+      }
     })
     .catch((error) => console.error("Error updating document:", error));
 
@@ -142,7 +158,7 @@ async function saveUserInfo() {
   document.getElementById("aboutMeInput").setAttribute("disabled", "true");
   document.getElementById("saveChangesButton").classList.add("hidden");
   document.getElementById("avatarInput").classList.remove("block");
- document.getElementById("avatarInput").value = ''
+  document.getElementById("avatarInput").value = "";
   document.getElementById("avatarInput").classList.add("hidden");
 }
 
@@ -181,7 +197,7 @@ async function saveUserInfo() {
 
 // function loadChartData() {
 //     const chartColor = "#4F46E5";
-    
+
 //     firebase.auth().onAuthStateChanged((user) => {
 //       if (user) {
 //         // Get all assessments for the current user, ordered by date
@@ -194,7 +210,7 @@ async function saveUserInfo() {
 //             console.log(assessment.last_updated)
 //             querySnapshot.forEach((doc) => {
 //               const assessment = doc.data();
-              
+
 //               // Check if the required data exists
 //               if (assessment.last_updated && assessment.ai && assessment.ai.dimensionScores && assessment.ai.dimensionScores.mental) {
 //                 data.push({
@@ -203,18 +219,18 @@ async function saveUserInfo() {
 //                 });
 //               }
 //             });
-            
+
 //             if (data.length > 0) {
 //               renderChart(data, chartColor);
 //             } else {
 //               // Display message if no valid data found
-//               document.getElementById("mentalChart").innerHTML = 
+//               document.getElementById("mentalChart").innerHTML =
 //                 '<text x="50%" y="50%" text-anchor="middle" font-size="16px">No mental health assessment data available</text>';
 //             }
 //           })
 //           .catch((error) => {
 //             console.error("Error getting assessments:", error);
-//             document.getElementById("mentalChart").innerHTML = 
+//             document.getElementById("mentalChart").innerHTML =
 //               '<text x="50%" y="50%" text-anchor="middle" font-size="16px">Error loading assessment data</text>';
 //           });
 //       } else {

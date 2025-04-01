@@ -1,6 +1,6 @@
 var __defProp = Object.defineProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
+var __name = (target, value) =>
+  __defProp(target, "name", { value, configurable: true });
 
 var src_default = {
   async fetch(request, env) {
@@ -101,7 +101,7 @@ var src_default = {
       - Social score: Based on questions 7, 8, 11
       - Physical score: Based on questions 5, 6, 9
       - Mental score: Based on questions 10, 12, 14
-      - Spiritual score: Inferred from questions 4, 13, 15`
+      - Spiritual score: Inferred from questions 4, 13, 15`;
       const apiKey = "api";
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
@@ -130,7 +130,9 @@ var src_default = {
       }
 
       // Extract the text response from the API's response
-      const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
+      const textResponse =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "No response received.";
 
       return new Response(JSON.stringify({ response: textResponse }), {
         headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -141,9 +143,6 @@ var src_default = {
         headers: corsHeaders,
       });
     }
-  }
+  },
 };
-export {
-  src_default as default
-};
-
+export { src_default as default };
