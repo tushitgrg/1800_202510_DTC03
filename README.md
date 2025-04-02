@@ -83,6 +83,7 @@ Well Circle/
 ├── api
 │   └── cloudflare-worker.js
 ├── assets
+│   ├── icon.ico
 │   └── lofioen.mp3
 ├── chat
 │   ├── index.html
@@ -106,7 +107,7 @@ Well Circle/
 │   └── report.html
 ├── resources
 │   ├── index.html
-│   └── music
+│   └── support
 │       └── index.html
 ├── scripts
 │   ├── NotProctectedRoute.js
