@@ -124,7 +124,6 @@ Well Circle/
 │   └── tailwind.config.js
 ├── styles
 │   └── style.css
-├── support.html
 ├── template.html
 └── user
     ├── index.html
