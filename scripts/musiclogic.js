@@ -1,10 +1,18 @@
 // musicLogic.js
 
-// Will need assistance with firebase storage and firestore!!!!!in lab tmr
+// Firebase Firestore and Authentication references
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// ✅ Load music by genre from Firestore
+/**
+ * Loads music tracks by genre from Firestore and displays them.
+ *
+ * This function queries the "music" collection for documents that match the specified genre.
+ * It then creates a card for each track with an audio player and action buttons (like and add to playlist),
+ * and appends the card to the corresponding genre container in the DOM.
+ *
+ * @param {string} genre - The genre of music tracks to load.
+ */
 function loadTracksByGenre(genre) {
   const genreTab = document.getElementById(genre + "-tracks");
   if (!genreTab) return;
@@ -36,7 +44,16 @@ function loadTracksByGenre(genre) {
     });
 }
 
-// ❤️ Save track to user's liked songs
+/**
+ * Saves a track to the user's liked songs collection in Firestore.
+ *
+ * This function adds the selected track to the current user's "likedTracks" subcollection.
+ * If the user is not signed in, an alert prompts them to sign in.
+ *
+ * @param {string} title - The title of the track.
+ * @param {string} genre - The genre of the track.
+ * @param {string} storagePath - The storage path of the track in Firebase Storage.
+ */
 function likeTrack(title, genre, storagePath) {
   const user = auth.currentUser;
   if (!user) return alert("Please sign in to like songs.");
@@ -54,7 +71,17 @@ function likeTrack(title, genre, storagePath) {
     .catch((err) => console.error("❌ Like failed:", err));
 }
 
-// ➕ Add track to user's custom playlist
+/**
+ * Adds a track to a user's custom playlist in Firestore.
+ *
+ * This function prompts the user for the playlist name, then adds the track to the
+ * specified playlist's "tracks" subcollection in Firestore. If the user is not signed in,
+ * an alert prompts them to sign in.
+ *
+ * @param {string} title - The title of the track.
+ * @param {string} genre - The genre of the track.
+ * @param {string} storagePath - The storage path of the track in Firebase Storage.
+ */
 function addToPlaylist(title, genre, storagePath) {
   const playlistName = prompt("Which playlist?");
   if (!playlistName) return;
@@ -76,7 +103,13 @@ function addToPlaylist(title, genre, storagePath) {
     .catch((err) => console.error("❌ Playlist add failed:", err));
 }
 
-// 📂 Create a new empty playlist
+/**
+ * Creates a new empty playlist for the current user in Firestore.
+ *
+ * The function retrieves the playlist name from an input field, validates the input,
+ * and then creates a new document in the user's "playlists" subcollection. Upon successful
+ * creation, it updates the UI to display the new playlist.
+ */
 function createPlaylist() {
   const name = document.getElementById("playlistName").value.trim();
   const user = auth.currentUser;
@@ -96,7 +129,12 @@ function createPlaylist() {
     });
 }
 
-// ▶️ Load user playlists
+/**
+ * Loads the current user's playlists from Firestore and displays them.
+ *
+ * This function retrieves all documents from the user's "playlists" subcollection and
+ * creates a card element for each playlist, displaying it in the UI.
+ */
 function loadUserPlaylists() {
   const user = auth.currentUser;
   if (!user) return;
@@ -118,7 +156,7 @@ function loadUserPlaylists() {
     });
 }
 
-// 🔁 Init all genres and playlist section
+// Initialize genres and user playlists when authentication state changes
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     loadUserPlaylists();

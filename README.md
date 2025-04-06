@@ -1,7 +1,7 @@
-
 # Well Circle
 
 ## Overview
+
 WellCircle is a mental health community platform designed to provide users with a supportive environment for mental well-being. It features a variety of tools and resources that promote mental health awareness, self-care, and peer support. Users can connect with others through forums, chat, access valuable resources, and engage in an AI-driven mental health quiz to gain insights into their emotional state.
 
 Developed for the Project 1800 course, applying User-Centred Design practices, agile project management processes, integrating gemini API, and Firebase backend services.
@@ -25,13 +25,13 @@ Developed for the Project 1800 course, applying User-Centred Design practices, a
 ## Technologies Used
 
 Example:
+
 - **Frontend**: HTML, CSS, JavaScript (with jQuery), Bootstrap, Tailwind CSS
 - **Backend**: Firebase, Cloudflare Worker for AI integration
 - **Database**: Firestore
 - **API**: Gemini API, Webios Image Storage API
 
 ---
-
 
 ## Installation
 
@@ -61,7 +61,7 @@ To run the project locally, follow these steps:
      projectId: "your-project-id",
      storageBucket: "your-storage-bucket",
      messagingSenderId: "your-messaging-sender-id",
-     appId: "your-app-id"
+     appId: "your-app-id",
    };
 
    // Initialize Firebase
@@ -75,7 +75,6 @@ To run the project locally, follow these steps:
    You can now open the `index.html` file in your preferred browser to start interacting with the app.
 
 ## Project Structure
-
 
 ```
 Well Circle/
@@ -135,46 +134,51 @@ Well Circle/
 ---
 
 ## Contributors
+
 - **Tushit Garg** - BCIT CST Student who loves making and breaking things.
 - **Stanislav** - BCIT CST Student who loves anime.
 - **Ruthanna** - BCIT CST Student who loves dogs.
 
-
-
-
 ## Acknowledgments
 
 - **Bootstrap Icons**:  
-   Open-source icon library for Bootstrap and other frameworks.  
-   - Source: [Bootstrap Icons](https://icons.getbootstrap.com/)
+   Open-source icon library for Bootstrap and other frameworks.
+
+  - Source: [Bootstrap Icons](https://icons.getbootstrap.com/)
 
 - **Material Icons**:  
-   Open-source icons following Material Design guidelines.  
-   - Source: [Material Icons](https://material.io/resources/icons/)
+   Open-source icons following Material Design guidelines.
+
+  - Source: [Material Icons](https://material.io/resources/icons/)
 
 - **Gemini API**:  
-   API for accessing financial services and cryptocurrency data.  
-   - Source: [Gemini API](https://docs.gemini.com/)
+   API for accessing financial services and cryptocurrency data.
+
+  - Source: [Gemini API](https://docs.gemini.com/)
 
 - **HealthLine**:  
-   Expert-reviewed health information and wellness advice.  
-   - Source: [HealthLine](https://www.healthline.com/)
+   Expert-reviewed health information and wellness advice.
+
+  - Source: [HealthLine](https://www.healthline.com/)
 
 - **Better Health (Victoria, Australia)**:  
-   Trusted health resource for physical and mental health topics.  
-   - Source: [BetterHealth.vic.gov.au](https://www.betterhealth.vic.gov.au/)
+   Trusted health resource for physical and mental health topics.
+
+  - Source: [BetterHealth.vic.gov.au](https://www.betterhealth.vic.gov.au/)
 
 - **Harvard Health**:  
-   Health information and articles developed by medical professionals.  
-   - Source: [Harvard Health](https://www.health.harvard.edu/)
+   Health information and articles developed by medical professionals.
+
+  - Source: [Harvard Health](https://www.health.harvard.edu/)
 
 - **McLean Hospital**:  
-   Leading provider of mental health services and information.  
-   - Source: [McLean Hospital](https://www.mcleanhospital.org/)
+   Leading provider of mental health services and information.
+  - Source: [McLean Hospital](https://www.mcleanhospital.org/)
 
 ---
 
 ## Limitations and Future Work
+
 ### Limitations
 
 - The AI-powered mental health quiz is relatively simple and lacks advanced features like personalized recommendations or ongoing progress tracking.
@@ -182,7 +186,6 @@ Well Circle/
 - Though Firebase handles authentication and storage, more measures could be taken to ensure that sensitive user data is more securely handled, especially regarding mental health information.
 
 - As the user base grows, the platform might face performance issues with scaling the real-time chat and data storage aspects, especially using Firebase.
-
 
 ### Future Work
 
@@ -192,9 +195,7 @@ Well Circle/
 
 - Introduce gamification elements to engage users, such as earning points for participation, completing mental health quizzes, and achieving personal well-being milestones.
 
-
 - Enable users to contribute mental health resources, articles, or tools that could benefit others, helping build a more collaborative and dynamic community.
-
 
 ---
 

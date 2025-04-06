@@ -90,44 +90,71 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
+        // DOM elements for message input, send button, and messages container.
         const messageInput = document.getElementById("message-input");
         const sendButton = document.getElementById("send-button");
         const messagesContainer = document.getElementById("messages");
+
+        // Extract the receiver's user ID from the URL query parameters.
         const paramsString = window.location.search;
         const searchParams = new URLSearchParams(paramsString);
         const userid = searchParams.get("id");
+
+        // Retrieve receiver's user data from Firestore.
         const ReceiverUser = await db.collection("users").doc(userid).get();
         const Receiver = ReceiverUser.data();
+        // Update UI with the receiver's name.
         receiverName.innerText = Receiver.name;
 
+        // Set the receiver's avatar if available.
         if (Receiver.avatar) {
           avatarImg.setAttribute("src", Receiver.avatar);
         }
+
+        /**
+         * Sends a chat message.
+         *
+         * This function verifies that a user is authenticated, checks that a non-empty message
+         * is provided, then creates a new document in the "chat" collection with the message content,
+         * sender, receiver, and a server timestamp. After sending, it clears the input field and
+         * scrolls the messages container to show the latest message.
+         */
         async function sendMessage() {
           firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
               const message = messageInput.value.trim();
               if (message) {
-                docref = await db.collection("chat").add({
+                await db.collection("chat").add({
                   sender: user.uid,
                   receiver: userid,
                   content: message,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 });
 
+                // Clear the message input and scroll to the bottom.
                 messageInput.value = "";
-
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
               }
             }
           });
         }
 
+        // Arrays to store messages sent by the user and messages received.
         let senderMessages = [];
         let receiverMessages = [];
+
+        /**
+         * Sets up real-time listeners for chat messages.
+         *
+         * This function listens for changes in the "chat" collection for messages where:
+         * - The current user is the sender and the specified receiver is the receiver.
+         * - The current user is the receiver and the specified sender is the receiver.
+         * On receiving updates, it stores the messages in separate arrays and calls renderAllMessages.
+         */
         function getAllMessages() {
           firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
+              // Listener for messages sent by the user to the receiver.
               db.collection("chat")
                 .where("sender", "==", user.uid)
                 .where("receiver", "==", userid)
@@ -144,6 +171,7 @@
                   },
                 );
 
+              // Listener for messages received by the user from the sender.
               db.collection("chat")
                 .where("receiver", "==", user.uid)
                 .where("sender", "==", userid)
@@ -163,23 +191,37 @@
           });
         }
 
+        // Initialize real-time message listeners.
         getAllMessages();
+
+        /**
+         * Formats a Firestore timestamp into a localized time string.
+         *
+         * @param {Object} timestamp - The Firestore timestamp object.
+         * @returns {string} A formatted time string (e.g., "08:30 PM").
+         */
         function formatTimestamp(timestamp) {
           const date = new Date(timestamp.seconds * 1000);
-
           return date.toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           });
         }
 
+        /**
+         * Renders all chat messages in the messages container.
+         *
+         * This function concatenates messages from both sender and receiver, sorts them by timestamp,
+         * and creates DOM elements for each message with distinct styling for sent and received messages.
+         * After rendering, it scrolls the container to display the latest message.
+         */
         function renderAllMessages() {
           messagesContainer.innerHTML = "";
 
           firebase.auth().onAuthStateChanged((user) => {
             if (user) {
+              // Combine and sort messages by timestamp.
               const allMessages = senderMessages.concat(receiverMessages);
-
               allMessages.sort(
                 (a, b) => a.timestamp.seconds - b.timestamp.seconds,
               );
@@ -187,38 +229,43 @@
               allMessages.forEach((message) => {
                 const messageElement = document.createElement("div");
 
+                // Render message sent by the current user.
                 if (message.sender === user.uid) {
                   messageElement.className =
                     "flex items-end justify-end space-x-2";
                   messageElement.innerHTML = `
-                            <div class="max-w-[75%] bg-primary text-white rounded-t-lg rounded-l-lg p-3">
-                                <p>${message.content}</p>
-                                <span class="text-xs text-white/70 mt-1 block">${formatTimestamp(message.timestamp)}</span>
-                            </div>
-                        `;
+                    <div class="max-w-[75%] bg-primary text-white rounded-t-lg rounded-l-lg p-3">
+                      <p>${message.content}</p>
+                      <span class="text-xs text-white/70 mt-1 block">${formatTimestamp(message.timestamp)}</span>
+                    </div>
+                  `;
                 } else {
-                  avatarurl = "/images/pfp.jpg";
+                  // Render message received from the other user.
+                  let avatarurl = "/images/pfp.jpg";
                   if (Receiver.avatar) {
                     avatarurl = Receiver.avatar;
                   }
                   messageElement.className = "flex items-end space-x-2";
                   messageElement.innerHTML = `
-                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                              <img src="${avatarurl}" class="rounded-full" alt="" id="avatarImg">
-                            </div>
-                            <div class="max-w-[75%] bg-secondary rounded-t-lg rounded-r-lg p-3">
-                                <p class="text-white">${message.content}</p>
-                                <span class="text-xs text-white mt-1 block">${formatTimestamp(message.timestamp)}</span>
-                            </div>
-                        `;
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                      <img src="${avatarurl}" class="rounded-full" alt="" id="avatarImg">
+                    </div>
+                    <div class="max-w-[75%] bg-secondary rounded-t-lg rounded-r-lg p-3">
+                      <p class="text-white">${message.content}</p>
+                      <span class="text-xs text-white mt-1 block">${formatTimestamp(message.timestamp)}</span>
+                    </div>
+                  `;
                 }
                 messagesContainer.appendChild(messageElement);
               });
+
+              // Auto-scroll to the bottom of the messages container.
               messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
           });
         }
 
+        // Attach event listeners for sending messages.
         sendButton.addEventListener("click", sendMessage);
         messageInput.addEventListener("keypress", function (e) {
           if (e.key === "Enter") {

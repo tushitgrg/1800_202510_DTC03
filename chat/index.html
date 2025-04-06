@@ -44,17 +44,30 @@
     </div>
 
     <script>
+      /**
+       * Fetches and displays the chat contacts for the currently authenticated user.
+       *
+       * This function listens for authentication state changes, and when a user is signed in,
+       * it retrieves all chat documents where the user is either the sender or receiver.
+       * It then builds a unique set of contact IDs and, for each contact, fetches the user's data
+       * from the "users" collection to create a clickable chat item that redirects to the chat page.
+       */
       function fetchChats() {
         firebase.auth().onAuthStateChanged((user) => {
+          // Get the authenticated user's ID.
           const userId = user.uid;
 
+          // Reference the container where chat contacts will be displayed.
           const chatsListContainer = document.getElementById("chatsList");
 
+          // Retrieve chat documents where the current user is the sender.
           db.collection("chat")
             .where("sender", "==", userId)
             .get()
             .then((querySnapshot) => {
+              // Create a Set to store unique contact IDs.
               const contacts = new Set();
+              // Add each receiver ID from the chats where the user is the sender.
               querySnapshot.forEach((doc) => {
                 const receiverId = doc.data().receiver;
                 contacts.add(receiverId);
@@ -62,54 +75,67 @@
               return contacts;
             })
             .then((contacts) => {
+              // Retrieve chat documents where the current user is the receiver.
               db.collection("chat")
                 .where("receiver", "==", userId)
                 .get()
                 .then((querySnapshot) => {
+                  // Add each sender ID from the chats where the user is the receiver.
                   querySnapshot.forEach((doc) => {
                     const senderId = doc.data().sender;
                     contacts.add(senderId);
                   });
+                  // If no contacts found, display a message.
                   if (contacts.size === 0) {
-                    chatsListContainer.innerHTML += "<li>No Chats </p>";
+                    chatsListContainer.innerHTML += "<li>No Chats</li>";
                   }
 
+                  // For each unique contact, fetch user data and create a chat item.
                   contacts.forEach(async (contactId) => {
-                    const user = await db
+                    // Fetch the contact's user document from Firestore.
+                    const userDoc = await db
                       .collection("users")
                       .doc(contactId)
                       .get();
-                    const userData = user.data();
+                    const userData = userDoc.data();
+
+                    // Create a container element for the chat item.
                     const contactElement = document.createElement("div");
                     contactElement.classList.add("chat-item");
-                    avatar = userData.avatar
+
+                    // Use the user's avatar if available; otherwise, use a default image.
+                    const avatar = userData.avatar
                       ? userData.avatar
                       : "images/pfp.jpg";
 
+                    // Set the inner HTML of the chat item.
                     contactElement.innerHTML = `
-                                 <li class="px-5 py-4 hover:bg-gray-50 cursor-pointer">
-          <div class="flex items-center space-x-3">
-            <img src=${avatar}  class="w-10 h-10 rounded-full" alt="">
-            <div>
-              <p class="font-medium text-gray-800">${userData.name}</p>
-             
-            </div>
-          </div>
-        </li>
-                            `;
+                      <li class="px-5 py-4 hover:bg-gray-50 cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                          <img src="${avatar}" class="w-10 h-10 rounded-full" alt="">
+                          <div>
+                            <p class="font-medium text-gray-800">${userData.name}</p>
+                          </div>
+                        </div>
+                      </li>
+                    `;
 
+                    // Add click event listener to redirect to the chat page for the selected contact.
                     contactElement
                       .querySelector("li")
                       .addEventListener("click", function () {
                         window.location.href = `/chat/open.html?id=${contactId}`;
                       });
 
+                    // Append the chat item to the chats list container.
                     chatsListContainer.appendChild(contactElement);
                   });
                 });
             });
         });
       }
+
+      // When the DOM content is loaded, initiate fetching chats.
       document.addEventListener("DOMContentLoaded", function () {
         fetchChats();
       });

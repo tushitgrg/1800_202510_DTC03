@@ -1,7 +1,22 @@
+/* 
+  This script handles the retrieval and display of a specific forum post along with its replies.
+  It includes functions for fetching a post and its associated user data, toggling likes on posts
+  and replies, appending the post and replies to the DOM, and adding new replies.
+*/
+
+// Get URL parameters and extract the post ID
 const paramsString = window.location.search;
 const searchParams = new URLSearchParams(paramsString);
 const postid = searchParams.get("id");
 
+/**
+ * Retrieves a post by its ID from the Firestore "posts" collection,
+ * along with the associated user data.
+ *
+ * @param {string} postid - The ID of the post to retrieve.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the post object,
+ * or undefined if the post does not exist.
+ */
 const getPost = async (postid) => {
   try {
     // Retrieve the post document by its ID
@@ -32,7 +47,17 @@ const getPost = async (postid) => {
   }
 };
 
+/**
+ * Toggles the like state for a given post or reply.
+ *
+ * This function updates the UI by toggling the fill attribute of the like icon and
+ * adjusts the displayed like count. It then updates the Firestore database to reflect
+ * the change in the "liked_by" array and "likes" count.
+ *
+ * @param {Object} item1 - The post or reply object to be liked/unliked.
+ */
 const like = async (item1) => {
+  // Toggle UI like state by changing SVG fill attribute and updating the like count
   if (
     document.getElementById(`svg${item1.id}`).getAttribute("fill") != "none"
   ) {
@@ -44,11 +69,14 @@ const like = async (item1) => {
     document.getElementById(`span${item1.id}`).innerText =
       parseInt(document.getElementById(`span${item1.id}`).innerText) + 1;
   }
+
+  // Check if a user is authenticated before updating the like status in the database
   firebase.auth().onAuthStateChanged(async (user) => {
     if (!user) return;
     const item = await getPost(item1.id);
     const liked_by = item.liked_by;
 
+    // Update the liked_by array and likes count based on whether the user already liked the item
     if (liked_by.includes(user.uid)) {
       liked_by.splice(liked_by.indexOf(user.uid), 1);
       await db
@@ -70,6 +98,13 @@ const like = async (item1) => {
     }
   });
 };
+
+/**
+ * Loads the post and its replies, then appends them to the DOM.
+ *
+ * This function fetches the post using its ID, displays the post content,
+ * retrieves all associated replies, and then appends both the post and replies to the page.
+ */
 const loadEverything = async () => {
   try {
     const post = await getPost(postid);
@@ -86,23 +121,32 @@ const loadEverything = async () => {
     console.log(e.message);
   }
 };
+
+// Load the post and replies once the DOM content has fully loaded
 window.addEventListener("DOMContentLoaded", async () => {
   await loadEverything();
 });
 
+/**
+ * Appends a post to the forum section of the page.
+ *
+ * This function dynamically creates and inserts HTML elements to display the post's details,
+ * such as title, author, content, like button, and share button.
+ *
+ * @param {Object} item - The post object to be appended.
+ */
 const appendPost = (item) => {
   const milliseconds =
     item.postedAt.seconds * 1000 + Math.floor(item.postedAt.nanoseconds / 1e6);
   let avatar = `/images/pfp.jpg`;
-  if (item.user) {
-    if (item.user.avatar) {
-      avatar = item.user.avatar;
-    }
+  if (item.user && item.user.avatar) {
+    avatar = item.user.avatar;
   }
 
-  // Create a Date object
+  // Create a Date object from the Firestore timestamp
   const date = new Date(milliseconds);
 
+  // Build the HTML for the post
   const html = ` <div class="p-6">
             <div class="flex justify-between items-start mb-4">
                 <h2 class="text-2xl font-bold text-gray-800">${item.title}</h2>
@@ -114,15 +158,15 @@ const appendPost = (item) => {
             <div class="flex items-center mb-6">
                 <img src="${avatar}" alt="User avatar" class="w-10 h-10 rounded-full mr-3">
                 <div>
-
-                <a href="/user/index.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
+                  <a href="/user/index.html?id=${item.userid}">     
+                    <div class="font-medium text-indigo-600">${item.username}</div> 
+                  </a>
                     <div class="text-sm text-gray-500">Posted ${date.toDateString()}</div>
                 </div>
             </div>
             
             <div class="prose max-w-none text-gray-700">
                 <p>${item.content}</p>
-                
             </div>
             
             <div class="flex gap-3 items-center mt-6 space-x-4">
@@ -138,10 +182,12 @@ const appendPost = (item) => {
                     </svg>
                     Share
                 </button>
-              
             </div>
         </div>`;
+  // Insert the post HTML into the forum section element
   document.getElementById("forumsection").innerHTML = html;
+
+  // Set up share data and add event listener for share functionality
   const shareData = {
     title: item.title,
     text: item.content.slice(0, 100),
@@ -150,34 +196,30 @@ const appendPost = (item) => {
   document.getElementById("sharebtn").addEventListener("click", async () => {
     await navigator.share(shareData);
   });
+
+  // Highlight the like button if the current user has already liked the post
   firebase.auth().onAuthStateChanged(async (user) => {
     if (item.liked_by.includes(user.uid)) {
       document.getElementById(`svg${item.id}`).setAttribute("fill", "violet");
     }
   });
 
+  // Add an event listener to the like button to trigger the like function
   document.getElementById(`btn${item.id}`).addEventListener("click", () => {
     like(item);
   });
 };
 
-// async function getallReplies(item) {
-//     let replies = []
-//     const itemReplies = item.replies
-//     for (let i = 0; i < itemReplies.length; i++) {
-//         if (!itemReplies[i]) continue
-//         await db.collection("posts").doc(itemReplies[i]).get().then((doc) => {
-//             dt = doc.data()
-//             dt.id = itemReplies[i]
-//             replies.push(dt)
-
-//         })
-//     }
-//     console.log(replies)
-//     return replies
-
-// }
-
+/**
+ * Retrieves all replies associated with a given post.
+ *
+ * This function fetches reply documents from Firestore based on the reply IDs stored
+ * in the post object, enriches each reply with its corresponding user data, and returns
+ * an array of reply objects.
+ *
+ * @param {Object} item - The post object containing a replies array.
+ * @returns {Promise<Array>} A promise that resolves to an array of valid reply objects.
+ */
 async function getallReplies(item) {
   try {
     // Ensure the replies array exists and filter out any falsy values
@@ -204,9 +246,8 @@ async function getallReplies(item) {
       return null; // Return null for non-existent replies
     });
 
-    // Wait for all reply promises to resolve
+    // Wait for all reply promises to resolve and filter out any null responses
     const replies = await Promise.all(replyPromises);
-    // Filter out any null responses (replies that didn't exist)
     const validReplies = replies.filter((reply) => reply !== null);
 
     console.log(validReplies);
@@ -217,6 +258,14 @@ async function getallReplies(item) {
   }
 }
 
+/**
+ * Appends an array of replies to the replies section in the DOM.
+ *
+ * This function generates HTML for each reply, inserts it into the DOM, and sets up
+ * event listeners for like functionality on each reply.
+ *
+ * @param {Array} replies - An array of reply objects to be displayed.
+ */
 const appendReplies = (replies) => {
   let html = `<div class="space-y-6" id="allreplies">`;
   for (let i = 0; i < replies.length; i++) {
@@ -226,10 +275,8 @@ const appendReplies = (replies) => {
       Math.floor(item.postedAt.nanoseconds / 1e6);
     const date = new Date(milliseconds);
     let avatar = `/images/pfp.jpg`;
-    if (item.user) {
-      if (item.user.avatar) {
-        avatar = item.user.avatar;
-      }
+    if (item.user && item.user.avatar) {
+      avatar = item.user.avatar;
     }
     html += `
         <div class="bg-white rounded-lg shadow-md p-6">
@@ -238,7 +285,9 @@ const appendReplies = (replies) => {
             <div class="flex-1">
               <div class="flex items-center justify-between mb-2">
                 <div>
-                   <a href="/user/index.html?id=${item.userid}">     <div class="font-medium text-indigo-600">${item.username}</div> </a>
+                   <a href="/user/index.html?id=${item.userid}">     
+                     <div class="font-medium text-indigo-600">${item.username}</div> 
+                   </a>
                   <span class="text-sm text-gray-500 ml-2">${date.toDateString()}</span>
                 </div>
                 <button class="text-gray-400 hover:text-gray-600">
@@ -257,15 +306,16 @@ const appendReplies = (replies) => {
                   </svg>
                   <span id="span${item.id}">${item.likes}</span> &nbsp; Likes
                 </button>
-              
               </div>
             </div>
           </div>
         </div>`;
   }
   html += `</div>`;
+  // Insert the replies HTML into the replies section element
   document.getElementById("repliessection").innerHTML = html;
 
+  // For each reply, check if the current user has liked it and add event listener for liking
   replies.forEach((item) => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (item.liked_by.includes(user.uid)) {
@@ -278,6 +328,11 @@ const appendReplies = (replies) => {
   });
 };
 
+/**
+ * Adds fake replies to the Firestore "posts" collection.
+ *
+ * This function is used for testing purposes and creates several fake reply documents.
+ */
 const addFakeReplies = async () => {
   let postref = db.collection("posts");
 
@@ -291,12 +346,15 @@ const addFakeReplies = async () => {
     });
   }
 };
+
+// Add event listener for the "addReplyBtn" to handle adding a new reply
 document.getElementById("addReplyBtn").addEventListener("click", async (e) => {
   e.preventDefault();
   firebase.auth().onAuthStateChanged(async (user) => {
     console.log(user);
     let val = document.getElementById("comment").value;
     if (val) {
+      // Create a new reply document in Firestore
       const docref = await db.collection("posts").add({
         category: "reply",
         content: val,
@@ -308,13 +366,16 @@ document.getElementById("addReplyBtn").addEventListener("click", async (e) => {
         userid: user.uid,
       });
 
+      // Retrieve the current post, update its replies array with the new reply ID, and update Firestore
       const post = await getPost(postid);
       const replies = post.replies;
       replies.push(docref.id);
       db.collection("posts").doc(postid).update({
         replies: replies,
       });
+      // Clear the comment input field
       document.getElementById("comment").value = "";
+      // Reload the post and replies to reflect the new addition
       await loadEverything();
     }
   });
